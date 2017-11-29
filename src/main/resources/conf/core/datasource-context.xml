@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <!-- h5数据源 -->
+    <bean id="dataSource_mysql_user" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.user.driverClassName}"/>
+        <property name="url" value="${jdbc.user.url}"/>
+        <property name="username" value="${jdbc.user.username}"/>
+        <property name="password" value="${jdbc.user.password}"/>
+    </bean>
+</beans>
