@@ -1,0 +1,24 @@
+.my-hotellist {
+	padding-left: 2px;
+}
+.my-hotellist img {
+	width: 80px; height: 80px;
+}
+.my-hotellist span:nth-child(2) {
+	position: absolute; left: 105px; top: 5px; font-size: large;
+}
+.my-hotellist span:nth-child(3) {
+	position: absolute; left: 105px; top: 32px; color: dodgerblue;
+}
+.my-hotellist span:nth-child(3) span {
+	color: gray;
+}
+.my-hotellist span:nth-child(4) {
+	position: absolute; left: 105px; top: 52px; color: gray;
+}
+.my-hotellist span:nth-child(5) {
+	position: absolute; left: 105px; top: 72px; color: gray;
+}
+.my-hotellist span:nth-child(6) {
+	position: absolute; right: 10px; top: 30px; color: red; font-size: x-large;
+}
