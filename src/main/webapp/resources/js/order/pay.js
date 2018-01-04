@@ -130,12 +130,13 @@ function payOrder() {
     if (result != null) {
         if (result.success) {
             alert("支付成功");
-            // TODO:跳转到订单详情页
         } else {
             alert("支付失败");
         }
-
+    } else {
+        alert("支付失败");
     }
+    window.location.href='/view/order/detail?user=' + $('#inputUser').val() + '&orderId=' + $('#inputOrderId').val();
 }
 
 /**

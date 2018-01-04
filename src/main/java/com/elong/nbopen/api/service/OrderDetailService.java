@@ -95,7 +95,11 @@ public class OrderDetailService {
                     }
                     result.setValueAdds(valueAdds);
                     if (orderDetailResult.getInvoice() == null) {
-                        result.setInvoiceStatus("未开具发票");
+                        if (orderDetailResult.getInvoiceMode() != null && orderDetailResult.getInvoiceMode().name().equals("Hotel")) {
+                            result.setInvoiceStatus("发票状态请联系酒店获悉");
+                        } else {
+                            result.setInvoiceStatus("未开具发票");
+                        }
                     } else {
                         if (orderDetailResult.getInvoiceMode().name().equals("Hotel")) {
                             result.setInvoiceStatus("发票状态请联系酒店获悉");
