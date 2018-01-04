@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elong.nbopen.api.dao.db.IOrderDao">
+
+    <resultMap id="orderResultMap" type="orderDo">
+        <id column="id" jdbcType="INTEGER" property="id" javaType="java.lang.Integer" />
+        <result column="order_id" jdbcType="INTEGER" property="orderId" javaType="java.lang.Long" />
+        <result column="affiliate_confirmation_id" jdbcType="VARCHAR" property="affiliateConfirmationId" javaType="java.lang.String" />
+        <result column="user_id" jdbcType="VARCHAR" property="userId" javaType="java.lang.String" />
+        <result column="status" jdbcType="VARCHAR" property="status" javaType="java.lang.String" />
+        <result column="show_status" jdbcType="INTEGER" property="showStatus" javaType="java.lang.Long" />
+        <result column="booking_time" jdbcType="TIMESTAMP" property="bookingTime" javaType="java.util.Date" />
+        <result column="hotel_id" jdbcType="VARCHAR" property="hotelId" javaType="java.lang.String" />
+        <result column="roomtype_id" jdbcType="VARCHAR" property="roomTypeId" javaType="java.lang.String" />
+        <result column="rateplan_id" jdbcType="INTEGER" property="ratePlanId" javaType="java.lang.Integer" />
+        <result column="payment_type" jdbcType="INTEGER" property="paymentType" javaType="java.lang.Integer" />
+        <result column="hotel_name" jdbcType="VARCHAR" property="hotelName" javaType="java.lang.String" />
+        <result column="room_name" jdbcType="VARCHAR" property="roomName" javaType="java.lang.String" />
+        <result column="rateplan_name" jdbcType="VARCHAR" property="ratePlanName" javaType="java.lang.String" />
+        <result column="arrival_date" jdbcType="TIMESTAMP" property="arrivalDate" javaType="java.util.Date" />
+        <result column="departure_date" jdbcType="TIMESTAMP" property="departureDate" javaType="java.util.Date" />
+        <result column="total_price" jdbcType="DOUBLE" property="totalPrice" javaType="java.lang.Double" />
+        <result column="hotel_phone" jdbcType="VARCHAR" property="hotelPhone" javaType="java.lang.String" />
+        <result column="contact_name" jdbcType="VARCHAR" property="contactName" javaType="java.lang.String" />
+        <result column="contact_phone" jdbcType="VARCHAR" property="contactPhone" javaType="java.lang.String" />
+        <result column="room_num" jdbcType="INTEGER" property="roomNum" javaType="java.lang.Integer" />
+        <result column="cancel_time" jdbcType="TIMESTAMP" property="cancelTime" javaType="java.util.Date" />
+        <result column="cancel_recieve_time" jdbcType="TIMESTAMP" property="cancelRecieveTime" javaType="java.util.Date" />
+        <result column="need_pay" jdbcType="TINYINT" javaType="java.lang.Boolean" property="needPay" />
+        <result column="pay_status" jdbcType="INTEGER" javaType="java.lang.Integer" property="payStatus" />
+        <result column="pay_amount" jdbcType="DOUBLE" property="payAmount" javaType="java.lang.Double" />
+    </resultMap>
+
+    <insert id="addOrder" parameterType="orderDo">
+        insert into self_order (
+        order_id, affiliate_confirmation_id, user_id,
+        status, show_status, booking_time, hotel_id,
+        roomtype_id, rateplan_id, payment_type, hotel_name,
+        room_name, rateplan_name, arrival_date, departure_date,
+        total_price, hotel_phone, contact_name, contact_phone,
+        room_num, cancel_time, cancel_recieve_time, need_pay,
+        pay_status, pay_amount
+        )
+        values (
+        #{orderId}, #{affiliateConfirmationId}, #{userId},
+        #{status}, #{showStatus}, #{bookingTime}, #{hotelId},
+        #{roomTypeId}, #{ratePlanId}, #{paymentType}, #{hotelName},
+        #{roomName}, #{ratePlanName}, #{arrivalDate}, #{departureDate},
+        #{totalPrice}, #{hotelPhone}, #{contactName}, #{contactPhone},
+        #{roomNum}, #{cancelTime}, #{cancelRecieveTime}, #{needPay},
+        #{payStatus}, #{payAmount}
+        )
+    </insert>
+
+    <select id="checkOrderWithUser" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM self_order WHERE order_id=#{orderId} AND user_id=#{userId}
+    </select>
+
+    <select id="queryOrderByOrderId" resultMap="orderResultMap">
+        SELECT * FROM self_order WHERE order_id=#{orderId} limit 1
+    </select>
+
+    <select id="queryOrdersByUserId" resultMap="orderResultMap">
+        SELECT * FROM self_order WHERE user_id=#{userId} ORDER BY id DESC limit #{begin},#{size}
+    </select>
+
+    <update id="updateOrder"  parameterType="orderDo">
+        UPDATE self_order
+        <trim prefix="set" suffixOverrides=",">
+            <if test="affiliateConfirmationId!=null">affiliate_confirmation_id=#{affiliateConfirmationId},</if>
+            <if test="userId!=null">user_id=#{userId},</if>
+            <if test="status!=null">status=#{status},</if>
+            <if test="showStatus!=null">show_status=#{showStatus},</if>
+            <if test="bookingTime!=null">booking_time=#{bookingTime},</if>
+            <if test="hotelId!=null">hotel_id=#{hotelId},</if>
+            <if test="roomTypeId!=null">roomtype_id=#{roomTypeId},</if>
+            <if test="ratePlanId!=null">rateplan_id=#{ratePlanId},</if>
+            <if test="paymentType!=null">payment_type=#{paymentType},</if>
+            <if test="hotelName!=null">hotel_name=#{hotelName},</if>
+            <if test="roomName!=null">room_name=#{roomName},</if>
+            <if test="ratePlanName!=null">rateplan_name=#{ratePlanName},</if>
+            <if test="arrivalDate!=null">arrival_date=#{arrivalDate},</if>
+            <if test="departureDate!=null">departure_date=#{departureDate},</if>
+            <if test="totalPrice!=null">total_price=#{totalPrice},</if>
+            <if test="hotelPhone!=null">hotel_phone=#{hotelPhone},</if>
+            <if test="contactName!=null">contact_name=#{contactName},</if>
+            <if test="contactPhone!=null">contact_phone=#{contactPhone},</if>
+            <if test="roomNum!=null">room_num=#{roomNum},</if>
+            <if test="cancelTime!=null">cancel_time=#{cancelTime},</if>
+            <if test="cancelRecieveTime!=null">cancel_recieve_time=#{cancelRecieveTime},</if>
+            <if test="needPay!=null">need_pay=#{needPay},</if>
+            <if test="payStatus!=null">pay_status=#{payStatus},</if>
+            <if test="payAmount!=null">pay_amount=#{payAmount},</if>
+        </trim>
+        WHERE order_id=#{orderId}
+    </update>
+</mapper>

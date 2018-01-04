@@ -1,0 +1,83 @@
+.my-header div div{
+    height: 50px; width: 100%;
+}
+.my-header div div div:nth-of-type(1) {
+    position: absolute; width: 30%; text-align: left; line-height: 50px; height: 50px; z-index: 99999;
+}
+.my-header div div div:nth-of-type(1) span {
+    font-size: 30px; line-height: 50px;
+}
+.my-header div div div:nth-of-type(2){
+    position: relative; text-align: center; width: 100%;
+}
+.my-header div div div:nth-of-type(2) span{
+    line-height: 50px; font-size: 25px; color: gray;
+}
+
+.my-bookinginfo span:nth-of-type(1) {
+    font-weight:900;
+    font-size: 20px;
+}
+.my-bookinginfo span:nth-of-type(2) {
+    color: orange;
+}
+.my-bookinginfo span:nth-of-type(3) {
+    font-size: 15px;
+}
+.my-bookinginfo span:nth-of-type(4) {
+    font-size: 15px;
+}
+.my-bookinginfo span:nth-of-type(5) {
+    font-size: 15px;
+}
+.my-bookinginfo span:nth-of-type(6) {
+    color: blue;
+}
+.my-cancelrule {
+    color: gray;
+    font-size: small;
+    margin-left: 10px;
+    margin-right: 4px;
+}
+.my-select {
+    width: 100%;
+}
+.my-select button {
+    width: 100%;
+    background: white;
+}
+.my-select ul {
+    width: 100%;
+}
+.my-select ul li {
+    text-align: center;
+}
+.my-input-group {
+    width: 100%;
+}
+.my-input-group span {
+    background: white; width: 130px; text-align: left;
+}
+.my-span-select {
+    width: 100%;
+}
+.my-span-title{
+    background: white; width: 130px; text-align: left;
+}
+.my-span-select div button{
+    width: 100%; background: white;
+}
+.my-span-select div ul {
+    width: 100%;
+}
+.my-span-select div ul li{
+    text-align: center;
+}
+.my-none-input-group {
+    width: 100%;
+    background: white;
+}
+.my-none-input-group input {
+    text-align: center; background: white;
+}
+

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elong.nbopen.api.dao.db.IUserDao">
+
+    <resultMap id="userResultMap" type="userDo">
+        <id column="id" jdbcType="INTEGER" property="id" javaType="java.lang.Integer" />
+        <result column="user_id" jdbcType="VARCHAR" javaType="java.lang.String" property="userId" />
+        <result column="is_login" jdbcType="TINYINT" javaType="java.lang.Boolean" property="isLogin" />
+        <result column="password" jdbcType="VARCHAR" javaType="java.lang.String" property="password" />
+        <result column="phone" jdbcType="VARCHAR" javaType="java.lang.String" property="phone" />
+        <result column="create_time" jdbcType="DATE" javaType="java.util.Date" property="createTime" />
+        <result column="last_update_time" jdbcType="DATE" javaType="java.util.Date" property="lastUpdateTime" />
+    </resultMap>
+
+    <select id="queryUserByName" resultMap="userResultMap">
+        SELECT * FROM user WHERE user_id=#{userName} FOR UPDATE
+    </select>
+
+    <insert id="addUser">
+        INSERT INTO user (user_id,password,is_login,phone,create_time,last_update_time) VALUES (#{userName},#{password},false,"",now(),now())
+    </insert>
+
+</mapper>
