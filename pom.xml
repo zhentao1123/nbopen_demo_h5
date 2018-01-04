@@ -85,6 +85,18 @@
           <version>${spring.version}</version>
           <scope>provided</scope>
       </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-tx</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+
+      <!-- 事务管理器 -->
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-orm</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
       <!-- springframe end -->
 
       <dependency>
@@ -100,13 +112,6 @@
           <version>5.1.29</version>
       </dependency>
 
-      <!-- 事务管理器 -->
-      <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-orm</artifactId>
-          <version>${spring.version}</version>
-      </dependency>
-
       <!-- mybatis核心包 -->
       <dependency>
           <groupId>org.mybatis</groupId>
@@ -119,6 +124,7 @@
           <artifactId>mybatis-spring</artifactId>
           <version>1.2.2</version>
       </dependency>
+
       <!-- 导入dbcp的jar包，用来在applicationContext.xml中配置数据库 -->
       <dependency>
           <groupId>commons-dbcp</groupId>
@@ -189,38 +195,50 @@
       </dependency>
       <!-- jackson end -->
 
+      <dependency>
+          <groupId>dom4j</groupId>
+          <artifactId>dom4j</artifactId>
+          <version>1.6.1</version>
+      </dependency>
+
+      <dependency>
+          <groupId>net.sourceforge.jexcelapi</groupId>
+          <artifactId>jxl</artifactId>
+          <version>2.6.12</version>
+      </dependency>
+
   </dependencies>
   <build>
     <finalName>nbopen_demo_h5</finalName>
     <plugins>
-      <!--<plugin>-->
-        <!--<groupId>org.apache.maven.plugins</groupId>-->
-        <!--<artifactId>maven-release-plugin</artifactId>-->
-        <!--<version>2.5.2</version>-->
-      <!--</plugin>-->
-      <!--<plugin>-->
-        <!--<groupId>org.apache.maven.plugins</groupId>-->
-        <!--<artifactId>maven-compiler-plugin</artifactId>-->
-        <!--<configuration>-->
-          <!--<source>1.7</source>-->
-          <!--<target>1.7</target>-->
-        <!--</configuration>-->
-      <!--</plugin>-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.2</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
 
-      <!--<plugin>-->
-        <!--<groupId>org.apache.maven.plugins</groupId>-->
-        <!--<artifactId>maven-jar-plugin</artifactId>-->
-        <!--<version>2.4</version>-->
-        <!--<executions>-->
-          <!--<execution>-->
-            <!--<id>jar:jar</id>-->
-            <!--<phase>install</phase>-->
-            <!--<goals>-->
-              <!--<goal>jar</goal>-->
-            <!--</goals>-->
-          <!--</execution>-->
-        <!--</executions>-->
-      <!--</plugin>-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <executions>
+          <execution>
+            <id>jar:jar</id>
+            <phase>install</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 

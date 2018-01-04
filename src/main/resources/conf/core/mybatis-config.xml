@@ -9,5 +9,7 @@
     </settings>
     <typeAliases>
         <typeAlias alias="userDo" type="com.elong.nbopen.api.model.dao.db.UserDo" />
+        <typeAlias alias="orderDo" type="com.elong.nbopen.api.model.dao.db.OrderDo" />
+        <typeAlias alias="incrOrderManagerDo" type="com.elong.nbopen.sync.model.dao.db.IncrOrderManagerDo" />
     </typeAliases>
 </configuration>

@@ -2,10 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="
          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
-   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd ">
 
     <!-- 加载配置文件 -->
     <context:property-placeholder location="classpath:conf/custom/env/*.properties" />
@@ -13,10 +15,12 @@
     <!-- 引入数据源配置文件 -->
     <import resource="classpath:conf/core/datasource-context.xml" />
 
-    <bean id="userDataSource" class="com.elong.nbopen.api.util.dao.db.ByKeyRoutingDataSource" scope="prototype">
+    <bean id="dataSource" class="com.elong.nbopen.api.util.dao.db.ByKeyRoutingDataSource" scope="prototype">
         <property name="targetDataSources">
             <map key-type="java.lang.String">
                 <entry key="dataSource_mysql_user" value-ref="dataSource_mysql_user" />
+                <entry key="dataSource_mysql_user" value-ref="dataSource_mysql_order" />
+                <entry key="dataSource_mysql_incr_order_manager" value-ref="dataSource_mysql_incr_order_manager" />
             </map>
         </property>
         <property name="defaultTargetDataSource" ref="dataSource_mysql_user" />
@@ -24,22 +28,31 @@
 
     <bean id="incrSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" scope="prototype">
         <property name="configLocation" value="classpath:conf/core/mybatis-config.xml"/>
-        <property name="dataSource" ref="userDataSource" />
+        <property name="dataSource" ref="dataSource" />
         <property name="mapperLocations" value="classpath:conf/mybatis/*.xml" />
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.elong.nbopen.api.dao.db" />
+        <property name="basePackage" value="com.elong.nbopen.api.dao.db,com.elong.nbopen.sync.dao.db" />
     </bean>
 
     <!-- 配置数据库注解aop -->
     <bean id="getDataSourceKeyAspect" class="com.elong.nbopen.api.util.dao.db.GetDataSourceKeyAspect" />
     <aop:config>
         <aop:aspect id="b" ref="getDataSourceKeyAspect">
-            <aop:pointcut id="tx"
-                          expression="execution(* com.elong.nbopen.api.dao.db.*.*(..))" />
+            <aop:pointcut id="tx" expression="execution(* com.elong.nbopen.api.dao.db.*.*(..)) or execution(* com.elong.nbopen.sync.dao.db.*.*(..))" />
             <aop:before pointcut-ref="tx" method="before" />
         </aop:aspect>
     </aop:config>
 
+    <!-- 事务配置 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 因使用连接池，所以只有在存在真实事务时开启Synchronization -->
+        <property name="transactionSynchronization" value="1"/>
+    </bean>
+
+    <!-- 开启事务注解驱动 -->
+    <tx:annotation-driven transaction-manager="transactionManager" order="100"/>
 </beans>

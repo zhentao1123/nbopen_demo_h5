@@ -3,11 +3,27 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <!-- h5数据源 -->
+    <!-- 用户信息数据源 -->
     <bean id="dataSource_mysql_user" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${jdbc.user.driverClassName}"/>
         <property name="url" value="${jdbc.user.url}"/>
         <property name="username" value="${jdbc.user.username}"/>
         <property name="password" value="${jdbc.user.password}"/>
+    </bean>
+
+    <!-- 订单信息数据源 -->
+    <bean id="dataSource_mysql_order" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.order.driverClassName}"/>
+        <property name="url" value="${jdbc.order.url}"/>
+        <property name="username" value="${jdbc.order.username}"/>
+        <property name="password" value="${jdbc.order.password}"/>
+    </bean>
+
+    <!-- 订单增量控制数据源 -->
+    <bean id="dataSource_mysql_incr_order_manager" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.incrorder.driverClassName}"/>
+        <property name="url" value="${jdbc.incrorder.url}"/>
+        <property name="username" value="${jdbc.incrorder.username}"/>
+        <property name="password" value="${jdbc.incrorder.password}"/>
     </bean>
 </beans>
