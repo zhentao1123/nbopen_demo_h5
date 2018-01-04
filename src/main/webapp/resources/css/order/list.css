@@ -1,0 +1,63 @@
+.my-header div div{
+    height: 50px; width: 100%;
+}
+.my-header div div div:nth-of-type(1) {
+    position: absolute; width: 30%; text-align: left; line-height: 50px; height: 50px; z-index: 9999;
+}
+.my-header div div span:nth-of-type(1) span {
+    font-size: 30px; line-height: 50px;
+}
+.my-header div div div:nth-of-type(2){
+    position: relative; text-align: center; width: 100%;
+}
+.my-header div div div span{
+    line-height: 50px; font-size: 25px; color: gray;
+}
+
+.my-bookinginfo span:nth-of-type(1) {
+    font-weight:700;
+    color: orange;
+    font-size: 16px;
+}
+.my-bookinginfo span:nth-of-type(2) {
+    margin-left: 20px;
+    color: gray;
+    font-size: 8px;
+}
+.my-bookinginfo span:nth-of-type(3) {
+    font-size: 20px;
+}
+.my-bookinginfo span:nth-of-type(4) {
+    font-size: 15px;
+}
+.my-bookinginfo span:nth-of-type(5) {
+    margin-left: 50px;
+    font-size: 15px;
+}
+.my-bookinginfo span:nth-of-type(6) {
+    font-size: 25px;
+    color: red;
+}
+.my-bookinginfo span:nth-of-type(7) {
+    font-weight: 900;
+    font-size: 15px;
+}
+.my-bookinginfo span:nth-of-type(8) {
+    color: blue;
+}
+.my-bookinginfo span:nth-of-type(9) {
+    font-weight: 900;
+    font-size: 20px;
+    color: red;
+}
+
+.my-btn-group {
+    text-align: right;
+}
+.my-btn-order {
+    width: 25%;
+    text-align: center;
+}
+.my-btn-order button {
+    width: 90%;
+}

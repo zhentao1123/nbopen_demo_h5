@@ -1,0 +1,41 @@
+.my-header div div{
+    height: 50px; width: 100%;
+}
+.my-header div div div:nth-of-type(1) {
+    position: absolute; width: 30%; text-align: left; line-height: 50px; height: 50px; z-index: 99999;
+}
+.my-header div div div:nth-of-type(1) span {
+    font-size: 30px; line-height: 50px;
+}
+.my-header div div div:nth-of-type(2){
+    position: relative; text-align: center; width: 100%;
+}
+.my-header div div div:nth-of-type(2) span{
+    line-height: 50px; font-size: 25px; color: gray;
+}
+
+.my-order-info span:nth-of-type(4) {
+    color: orange;
+}
+.my-order-info span:nth-of-type(5) {
+    font-size: 8px;
+    margin-left: 40px;
+}
+.my-hotel-info span:nth-of-type(2) {
+    color: gray;
+}
+.my-product-info span:nth-of-type(8) {
+    margin-left: 14px;
+}
+.my-product-info span:nth-of-type(16) {
+    margin-left: 14px;
+}
+.my-booking-info span:nth-of-type(4) {
+    color: red;
+}
+.my-booking-info span:nth-of-type(6),.my-booking-info span:nth-of-type(8) {
+    margin-left: 28px;
+}
+.my-booking-info span:nth-of-type(7),.my-booking-info span:nth-of-type(9) {
+    color: red;
+}

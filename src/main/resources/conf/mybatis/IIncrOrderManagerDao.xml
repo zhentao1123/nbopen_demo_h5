@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elong.nbopen.sync.dao.db.IIncrOrderManagerDao">
+
+    <resultMap id="managerResultMap" type="incrOrderManagerDo">
+        <id column="id" jdbcType="INTEGER" property="id" javaType="java.lang.Integer" />
+        <result column="mac_addr" jdbcType="VARCHAR" javaType="java.lang.String" property="macAddr" />
+        <result column="beat_time" jdbcType="TIMESTAMP" javaType="java.util.Date" property="beatTime" />
+        <result column="last_id" jdbcType="INTEGER" javaType="java.lang.Long" property="lastId" />
+    </resultMap>
+
+    <!-- 获取订单增量管理信息 -->
+    <select id="getManagerInfo" resultMap="managerResultMap">
+        SELECT * FROM incr_order_manager;
+    </select>
+
+    <!-- 更新lastid最后心跳时间 -->
+    <update id="updateBeatTime">
+        UPDATE incr_order_manager SET beat_time=#{beatTime},last_id=#{lastId} WHERE mac_addr=#{macAddr}
+    </update>
+
+    <!-- 更新mac地址，实质上是抢占资源 -->
+    <update id="updateMacAddr">
+        UPDATE incr_order_manager SET mac_addr=#{newMacAddr}, beat_time=#{beatTime} WHERE mac_addr=#{oldMacAddr}
+    </update>
+
+</mapper>
