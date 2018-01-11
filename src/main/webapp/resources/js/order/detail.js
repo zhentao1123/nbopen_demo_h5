@@ -93,10 +93,10 @@ function initPage() {
             '<span>'+result.bookingDate+'</span>' +
             '<hr/>' +
             '<span>订单金额：</span>' +
-            '<span>￥'+result.totalPrice+'</span>' +
+            '<span>'+changeCurrency(result.currencyCode)+result.totalPrice+'</span>' +
             '<span>（'+result.paymentType+'）</span>';
         if (result.penalty != null && result.penalty != 0) {
-            tempHtml +=  '<hr/><span>罚金：</span><span>￥'+ result.penalty+'</span><br/>';
+            tempHtml +=  '<hr/><span>罚金：</span><span>'+changeCurrency(result.currencyCode)+ result.penalty+'</span><br/>';
         }
         $('#divBookingInfo').html(tempHtml);
 
@@ -107,4 +107,21 @@ function initPage() {
             $('#divPayOrder').css("display", "block");
         }
     }
+}
+
+// 货币符号转换
+function changeCurrency(info) {
+    var currency = "￥ ";
+    if (info == "RMB") {
+        currency = "￥ ";
+    } else if (info == "HKD") {
+        currency = "＄ ";
+    } else if (info == "MOP") {
+        currency = "＄ ";
+    } else if (info == "JPY") {
+        currency = "￥";
+    } else if (info == "TWD") {
+        currency = "＄ ";
+    }
+    return currency;
 }

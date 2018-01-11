@@ -54,7 +54,7 @@ function getOrders() {
                 '<div name="divOrder" orderid="'+info.orderId+'" class="panel-body my-bookinginfo">' +
                 '<span>'+info.showStatus+'</span><span></span><br/><hr />' +
                 '<span>'+info.hotelName+'</span><br />' +
-                '<span>'+info.roomName+'</span><span>'+info.paymentType+'</span><span>￥'+info.totalPrice+'</span><br />' +
+                '<span>'+info.roomName+'</span><span>'+info.paymentType+'</span><span>'+changeCurrency(info.currencyCode)+info.totalPrice+'</span><br />' +
                 '<span>'+info.dateDescription+'</span><span>'+info.numberOfDays+'晚'+info.numberOfRooms+'间</span><hr />' +
                 '<div class="my-btn-group">' ;
             if (info.bCancel) {
@@ -93,7 +93,7 @@ function getOrders() {
             if (result != null && result.success) {
                 alert("取消成功");
             } else {
-                alert("取消失败");
+                alert(result.reason);
             }
             window.location.reload(true);
 
@@ -124,4 +124,21 @@ function getOrders() {
         $('#pullMoreOrder').css("display", "none");
         $('#noOrderInfo').css("display", "block");
     }
+}
+
+// 货币符号转换
+function changeCurrency(info) {
+    var currency = "￥ ";
+    if (info == "RMB") {
+        currency = "￥ ";
+    } else if (info == "HKD") {
+        currency = "＄ ";
+    } else if (info == "MOP") {
+        currency = "＄ ";
+    } else if (info == "JPY") {
+        currency = "￥";
+    } else if (info == "TWD") {
+        currency = "＄ ";
+    }
+    return currency;
 }

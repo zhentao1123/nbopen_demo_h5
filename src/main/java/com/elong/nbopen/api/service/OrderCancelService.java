@@ -1,5 +1,6 @@
 package com.elong.nbopen.api.service;
 
+import com.elong.nbopen.api.dao.db.IOrderDao;
 import com.elong.nbopen.api.model.dao.db.OrderDo;
 import com.elong.nbopen.api.model.elong.CancelOrderCondition;
 import com.elong.nbopen.api.model.repository.OrderCancelResult;
@@ -20,6 +21,9 @@ public class OrderCancelService {
     @Autowired
     private HotelOrderCancelApi cancelApi;
 
+    @Autowired
+    private IOrderDao orderDao;
+
     /**
      *
      * 取消订单
@@ -36,12 +40,18 @@ public class OrderCancelService {
         try {
             OrderCancelResult cancelResult = cancelApi.Invoke(condition);
             if (cancelResult == null || !cancelResult.getCode().equals("0") || !cancelResult.getResult().isSuccesss()) {
-                result.setReason("取消订单失败");
+                result.setReason(cancelResult.getCode().split("\\|")[1]);
             } else {
                 result.setSuccess(true);
+                // 取消成功则更新接收到取消请求的时间，并且将订单状态变更为D，
+                // 如果以后有订单变化表明没有取消成功，那么再根据增量中的信息更新订单
+                // 取消成功后也不再可以支付
                 OrderDo orderDo = new OrderDo();
                 orderDo.setOrderId(request.getOrderId());
+                orderDo.setStatus("D");
+                orderDo.setNeedPay(false);
                 orderDo.setCancelRecieveTime(new Date());
+                orderDao.updateOrder(orderDo);
             }
         } catch (Exception e) {
             result.setReason("取消操作异常");

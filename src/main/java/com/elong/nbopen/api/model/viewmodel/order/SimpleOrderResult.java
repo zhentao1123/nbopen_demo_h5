@@ -34,6 +34,8 @@ public class SimpleOrderResult {
 
     private BigDecimal totalPrice;
 
+    private String currencyCode;
+
     public long getOrderId() {
         return orderId;
     }
@@ -130,4 +132,11 @@ public class SimpleOrderResult {
         this.totalPrice = totalPrice;
     }
 
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
 }

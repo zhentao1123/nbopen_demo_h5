@@ -84,8 +84,8 @@
 
 </div>
 <!-- 订单列表 -->
-<div id="pullMoreOrder" style="text-align: center; display: block">点击加载更多</div>
-<div id="noOrderInfo" style="text-align: center; display: none">没有更多酒店了</div>
+<div id="pullMoreOrder" style="text-align: center; display: block">点击加载更多订单</div>
+<div id="noOrderInfo" style="text-align: center; display: none">没有更多订单了</div>
 </body>
 
 </html>

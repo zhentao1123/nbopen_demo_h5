@@ -90,7 +90,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="btn-group" data-toggle="buttons"  style="width: 100%;">
-                <button id='btnStarRateDefault' name="btnStarRate" value="-1" class="btn btn-info" style="width: 20%"> 不限 </button>
+                <button id='btnStarRateDefault' name="btnStarRate" value="-1" class="btn btn-default" style="width: 20%"> 不限 </button>
                 <button id='btnStarRate012' name="btnStarRate" value="0,1,2" class="btn btn-default" style="width: 20%"> 经济/客栈 </button>
                 <button id='btnStarRate3' name="btnStarRate" value="3" class="btn btn-default" style="width: 20%"> 三星/舒适 </button>
                 <button id='btnStarRate4' name="btnStarRate" value="4" class="btn btn-default" style="width: 20%"> 四星/高档 </button>

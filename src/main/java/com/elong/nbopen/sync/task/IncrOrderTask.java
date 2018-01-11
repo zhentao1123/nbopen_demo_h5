@@ -69,8 +69,8 @@ public class IncrOrderTask extends Thread implements InitializingBean {
             // mac地址为空 或者 心跳时间为1970-01-01 或者 心跳时间超过设置的更新频率间隔的四倍并且在5分钟以上 则认为原有的更新任务死掉了 需要抢占
             if (StringUtils.isBlank(managerDo.getMacAddr())
                     || managerDo.getBeatTime().getTime() == -28800000
-                    || ((managerDo.getBeatTime().getTime() - new Date().getTime()) / CommonService.INCR_ORDER_FREQUENCY > 4
-                    && (managerDo.getBeatTime().getTime() - new Date().getTime()) / 60000 > 5)) {
+                    || ((new Date().getTime() - managerDo.getBeatTime().getTime()) / CommonService.INCR_ORDER_FREQUENCY > 4
+                    && (new Date().getTime() - managerDo.getBeatTime().getTime()) / 60000 > 5)) {
                 // 此时需要抢占
                 Map<String, Object> params = new HashMap<String, Object>();
                 params.put("newMacAddr", CommonService.MAC_ADDR);
@@ -145,6 +145,7 @@ public class IncrOrderTask extends Thread implements InitializingBean {
                             orderDo.setRatePlanName(orderDetail.getRatePlanName());
                             orderDo.setBookingTime(orderDetail.getCancelTime());
                             orderDo.setCancelTime(orderDetail.getCancelTime());
+                            orderDo.setCurrencyCode(orderDetail.getCurrencyCode().name());
                             orderDo.setBookingTime(new Date());
                             if (orderDetail.getPaymentType().equals("SelfPay")) {
                                 orderDo.setPaymentType(0);
@@ -171,6 +172,9 @@ public class IncrOrderTask extends Thread implements InitializingBean {
                             if (orderDao.updateOrder(orderDo) == 0) {
                                 logger.info("【新增的关联订单：】" + orderDo.getOrderId());
                             }
+
+                            // 请求一次订单详情后睡眠100毫秒以防访问频繁
+                            Thread.sleep(100);
                         } else {
                             logger.error(orderInfoResult.getCode());
                         }

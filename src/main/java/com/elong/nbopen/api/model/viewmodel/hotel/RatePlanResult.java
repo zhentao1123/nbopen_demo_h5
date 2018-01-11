@@ -41,6 +41,11 @@ public class RatePlanResult {
      */
     private String paymentType;
 
+    /**
+     * 是否直签
+     */
+    private Integer cooperationType;
+
     public Integer getRatePlanId() {
         return ratePlanId;
     }
@@ -95,5 +100,13 @@ public class RatePlanResult {
 
     public void setPaymentType(String paymentType) {
         this.paymentType = paymentType;
+    }
+
+    public Integer getCooperationType() {
+        return cooperationType;
+    }
+
+    public void setCooperationType(Integer cooperationType) {
+        this.cooperationType = cooperationType;
     }
 }

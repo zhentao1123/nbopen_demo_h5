@@ -18,6 +18,16 @@ public class DetailResult {
     private String hotelName;
 
     /**
+     * 纬度
+     */
+    private String latitude;
+
+    /**
+     * 经度
+     */
+    private String longitude;
+
+    /**
      * 星级
      */
     private String starRate;
@@ -136,5 +146,21 @@ public class DetailResult {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 }

@@ -86,6 +86,10 @@ public class OrderPayService {
                 orderDo.setNeedPay(false);
                 orderDao.updateOrder(orderDo);
             }
+        } else if (payResult != null && payResult.getCode() != null && !payResult.getCode().equals("0")) {
+            result.setMessage(payResult.getCode().split("\\|")[1]);
+        } else {
+            result.setMessage("支付发生异常");
         }
         return result;
     }

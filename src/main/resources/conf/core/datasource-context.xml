@@ -9,6 +9,16 @@
         <property name="url" value="${jdbc.user.url}"/>
         <property name="username" value="${jdbc.user.username}"/>
         <property name="password" value="${jdbc.user.password}"/>
+        <property name="maxActive" value="${jdbc.common.maxActive}"></property>
+        <property name="maxIdle" value="${jdbc.common.maxIdle}"></property>
+        <property name="maxWait" value="${jdbc.common.maxWait}"></property>
+        <property name="timeBetweenEvictionRunsMillis" value="${jdbc.common.timeBetweenEvictionRunsMillis}"></property>
+        <property name="testWhileIdle" value="${jdbc.common.testWhileIdle}"></property>
+        <property name="testOnBorrow" value="${jdbc.common.testOnBorrow}"></property>
+        <property name="testOnReturn" value="${jdbc.common.testOnReturn}"></property>
+        <property name="validationQuery">
+            <value>select 1</value>
+        </property>
     </bean>
 
     <!-- 订单信息数据源 -->
@@ -17,6 +27,16 @@
         <property name="url" value="${jdbc.order.url}"/>
         <property name="username" value="${jdbc.order.username}"/>
         <property name="password" value="${jdbc.order.password}"/>
+        <property name="maxActive" value="${jdbc.common.maxActive}"></property>
+        <property name="maxIdle" value="${jdbc.common.maxIdle}"></property>
+        <property name="maxWait" value="${jdbc.common.maxWait}"></property>
+        <property name="timeBetweenEvictionRunsMillis" value="${jdbc.common.timeBetweenEvictionRunsMillis}"></property>
+        <property name="testWhileIdle" value="${jdbc.common.testWhileIdle}"></property>
+        <property name="testOnBorrow" value="${jdbc.common.testOnBorrow}"></property>
+        <property name="testOnReturn" value="${jdbc.common.testOnReturn}"></property>
+        <property name="validationQuery">
+            <value>select 1</value>
+        </property>
     </bean>
 
     <!-- 订单增量控制数据源 -->
@@ -25,5 +45,15 @@
         <property name="url" value="${jdbc.incrorder.url}"/>
         <property name="username" value="${jdbc.incrorder.username}"/>
         <property name="password" value="${jdbc.incrorder.password}"/>
+        <property name="maxActive" value="${jdbc.common.maxActive}"></property>
+        <property name="maxIdle" value="${jdbc.common.maxIdle}"></property>
+        <property name="maxWait" value="${jdbc.common.maxWait}"></property>
+        <property name="timeBetweenEvictionRunsMillis" value="${jdbc.common.timeBetweenEvictionRunsMillis}"></property>
+        <property name="testWhileIdle" value="${jdbc.common.testWhileIdle}"></property>
+        <property name="testOnBorrow" value="${jdbc.common.testOnBorrow}"></property>
+        <property name="testOnReturn" value="${jdbc.common.testOnReturn}"></property>
+        <property name="validationQuery">
+            <value>select 1</value>
+        </property>
     </bean>
 </beans>

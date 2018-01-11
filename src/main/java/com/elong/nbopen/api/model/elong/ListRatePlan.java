@@ -89,7 +89,8 @@ import javax.xml.bind.annotation.XmlType;
     "suffixName",
     "hotelCode",
     "invoiceMode",
-    "bookingChannels"
+    "bookingChannels",
+    "CooperationType"
 })
 public class ListRatePlan
     extends BaseRatePlan
@@ -150,6 +151,8 @@ public class ListRatePlan
     protected EnumInvoiceMode invoiceMode;
     @JSONField(name = "BookingChannels")
     protected String bookingChannels;
+    @JSONField(name = "CooperationType")
+    protected Integer cooperationType;
 
     /**
      * Gets the value of the status property.
@@ -743,4 +746,27 @@ public class ListRatePlan
         this.bookingChannels = value;
     }
 
+    public boolean isLastMinuteSale() {
+        return isLastMinuteSale;
+    }
+
+    public void setLastMinuteSale(boolean lastMinuteSale) {
+        isLastMinuteSale = lastMinuteSale;
+    }
+
+    public String gethAvailPolicyIds() {
+        return hAvailPolicyIds;
+    }
+
+    public void sethAvailPolicyIds(String hAvailPolicyIds) {
+        this.hAvailPolicyIds = hAvailPolicyIds;
+    }
+
+    public Integer getCooperationType() {
+        return cooperationType;
+    }
+
+    public void setCooperationType(Integer cooperationType) {
+        this.cooperationType = cooperationType;
+    }
 }

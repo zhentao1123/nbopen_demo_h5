@@ -75,7 +75,7 @@ public class HotelListController {
     private boolean updateCityList() {
 
         // 获取geo静态文件
-        String url = CommonsUtil.CONFIG_PROVIDAR.getProperty("elong_static_geo_url");
+        String url = "http://api.elongstatic.com/xml/v2.0/hotel/geo_cn.xml";
         String responseData = Http.Send("GET", url, "");
 
         // 保存geo静态文件，有则删除后新建，无则直接新建

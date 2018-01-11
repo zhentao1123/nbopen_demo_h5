@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
+import java.util.Enumeration;
 
 /**
  * Created by user on 2017/12/14.
@@ -85,14 +86,23 @@ public class CommonService {
      */
     public static boolean initMacAddr() {
         try {
-            byte[] mac = NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress();
-            StringBuffer sb = new StringBuffer();
-            for(int i=0;i<mac.length;i++){
-                //mac[i] & 0xFF 是为了把byte转化为正整数
-                String s = Integer.toHexString(mac[i] & 0xFF);
-                sb.append(s.length()==1?0+s:s);
+            byte[] mac = null;
+            Enumeration<NetworkInterface> inters =  NetworkInterface.getNetworkInterfaces();
+            while(inters.hasMoreElements()) {
+                NetworkInterface inter = inters.nextElement();
+                mac =inter.getHardwareAddress();
+                if (mac != null) {
+                    StringBuffer sb = new StringBuffer();
+                    for(int j=0;j<mac.length;j++){
+                        //mac[i] & 0xFF 是为了把byte转化为正整数
+                        String s = Integer.toHexString(mac[j] & 0xFF);
+                        sb.append(s.length()==1?0+s:s);
+                    }
+                    MAC_ADDR = sb.toString().toUpperCase();
+                    break;
+                }
             }
-            MAC_ADDR = sb.toString().toUpperCase();
+
             if (StringUtils.isNotBlank(MAC_ADDR)) {
                 return true;
             } else {

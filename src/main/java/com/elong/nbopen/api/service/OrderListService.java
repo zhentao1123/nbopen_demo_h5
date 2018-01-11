@@ -6,6 +6,7 @@ import com.elong.nbopen.api.model.elong.EnumOrderShowStatus;
 import com.elong.nbopen.api.model.viewmodel.order.ListRequest;
 import com.elong.nbopen.api.model.viewmodel.order.ListResult;
 import com.elong.nbopen.api.model.viewmodel.order.SimpleOrderResult;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,7 @@ public class OrderListService {
                     simpleOrderResult.setRoomName(orderDo.getRoomName());
                     simpleOrderResult.setPaymentType(orderDo.getPaymentType() == 0? "现付": "预付");
                     simpleOrderResult.setTotalPrice(new BigDecimal(orderDo.getTotalPrice()));
+                    simpleOrderResult.setCurrencyCode(StringUtils.isBlank(orderDo.getCurrencyCode())? "RMB": orderDo.getCurrencyCode());
 
                     // 入离日期描述
                     String[] weekOfDays = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
@@ -76,11 +78,14 @@ public class OrderListService {
                     // 可以支付的情况下也可以取消
                     if (orderDo.getNeedPay()) {
                         simpleOrderResult.setbCancel(true);
+                    } else if (orderDo.getStatus().equals("D")) {
+                        // 取消成功的情况下不可取消
+                        simpleOrderResult.setbCancel(false);
                     } else {
                         simpleOrderResult.setbCancel(orderDo.getCancelTime().getTime() > new Date().getTime());
                     }
 
-                    // 如果处于E状态48小时，那么可以认为取消
+                    // 如果处于E状态48小时，那么可以认为取消成功
                     if (orderDo.getCancelRecieveTime().getTime() != -28800000L
                             &&new Date().getTime() - orderDo.getCancelRecieveTime().getTime() > 48 * 3600000
                             && orderDo.getShowStatus() != 256L) {
@@ -92,7 +97,7 @@ public class OrderListService {
                         } catch (Exception e) {
                             logger.error(e);
                         }
-
+                        simpleOrderResult.setbCancel(false);
                         simpleOrderResult.setShowStatus("已经取消");
                     }
 

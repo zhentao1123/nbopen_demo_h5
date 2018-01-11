@@ -18,10 +18,10 @@
 <script type="text/javascript" src="/resources/plugins/jquery/jquery-2.1.0.js"></script>
 <script type="text/javascript" src="/resources/js/common/moment.min.js"></script>
 <script type="text/javascript" src="/resources/js/common/common.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Un9kDG27zSkwEL9Eut9dRPpoTu6BTGdg"></script>
 <script type="text/javascript" src="/resources/js/hotel/detail.js"></script>
 <script type="text/javascript" src="/resources/plugins/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resources/js/common/daterangepicker.js"></script>
-
 <head>
 </head>
 <body style="background: #F4F4F4;">
@@ -66,11 +66,18 @@
     </div>
     <!-- 轮播图 -->
 
+    <!-- 地图 -->
+    <div id="allmap" style="height: 100px;width: 100%">
+
+    </div>
+
     <div class="panel panel-default">
         <div id="divHotelSimpelInfo" class="panel-body my-hotelsimpleinfo">
 
         </div>
     </div>
+
+
 
     <div name="divMoreHotelInfo" id="divFacilities" class="panel panel-default" style="display: none;">
     </div>

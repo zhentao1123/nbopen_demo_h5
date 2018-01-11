@@ -47,7 +47,7 @@ public class LoginController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/login", method= RequestMethod.GET)
+    @RequestMapping(value = "/loginPage", method= RequestMethod.GET)
     public ModelAndView login(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("/WEB-INF/views/test/login.jsp");
         return mv;
@@ -56,7 +56,7 @@ public class LoginController {
     @RequestMapping(value = "/register", method= RequestMethod.POST)
     @ResponseBody
     @Transactional
-    public RegisterResult getDetail(HttpServletRequest request, @RequestBody LoginRequest requestBody) {
+    public RegisterResult register(HttpServletRequest request, @RequestBody LoginRequest requestBody) {
         RegisterResult result = new RegisterResult();
         Map<String, Object> params = new HashMap<String, Object>();
         if (StringUtils.isBlank(requestBody.getUserName())) {
@@ -109,13 +109,5 @@ public class LoginController {
 
         }
         return result;
-    }
-
-    @RequestMapping(value = "/ltest", method= RequestMethod.POST)
-    @ResponseBody
-    public OrderDo ltest() {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("orderId", 171882798);
-        return orderDao.queryOrderByOrderId(params);
     }
 }

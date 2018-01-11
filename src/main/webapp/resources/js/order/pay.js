@@ -131,7 +131,7 @@ function payOrder() {
         if (result.success) {
             alert("支付成功");
         } else {
-            alert("支付失败");
+            alert(result.message);
         }
     } else {
         alert("支付失败");

@@ -131,6 +131,7 @@ public class OrderCreateService {
                 orderDo.setArrivalDate(request.getArrivalDate());
                 orderDo.setDepartureDate(request.getDepartureDate());
                 orderDo.setTotalPrice(request.getTotalPrice().doubleValue());
+                orderDo.setCurrencyCode(request.getCurrencyCode());
                 orderDo.setContactName(request.getContactName());
                 orderDo.setContactPhone(request.getContactPhone());
                 orderDo.setRoomNum(request.getNumberOfRooms());

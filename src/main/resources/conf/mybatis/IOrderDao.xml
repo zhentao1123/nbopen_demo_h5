@@ -29,6 +29,7 @@
         <result column="need_pay" jdbcType="TINYINT" javaType="java.lang.Boolean" property="needPay" />
         <result column="pay_status" jdbcType="INTEGER" javaType="java.lang.Integer" property="payStatus" />
         <result column="pay_amount" jdbcType="DOUBLE" property="payAmount" javaType="java.lang.Double" />
+        <result column="currency_code" jdbcType="VARCHAR" property="currencyCode" javaType="java.lang.String" />
     </resultMap>
 
     <insert id="addOrder" parameterType="orderDo">
@@ -39,7 +40,7 @@
         room_name, rateplan_name, arrival_date, departure_date,
         total_price, hotel_phone, contact_name, contact_phone,
         room_num, cancel_time, cancel_recieve_time, need_pay,
-        pay_status, pay_amount
+        pay_status, pay_amount, currency_code
         )
         values (
         #{orderId}, #{affiliateConfirmationId}, #{userId},
@@ -48,7 +49,7 @@
         #{roomName}, #{ratePlanName}, #{arrivalDate}, #{departureDate},
         #{totalPrice}, #{hotelPhone}, #{contactName}, #{contactPhone},
         #{roomNum}, #{cancelTime}, #{cancelRecieveTime}, #{needPay},
-        #{payStatus}, #{payAmount}
+        #{payStatus}, #{payAmount}, #{currencyCode}
         )
     </insert>
 
@@ -91,6 +92,7 @@
             <if test="needPay!=null">need_pay=#{needPay},</if>
             <if test="payStatus!=null">pay_status=#{payStatus},</if>
             <if test="payAmount!=null">pay_amount=#{payAmount},</if>
+            <if test="currencyCode!=null">currency_code=#{currencyCode},</if>
         </trim>
         WHERE order_id=#{orderId}
     </update>

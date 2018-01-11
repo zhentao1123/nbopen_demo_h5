@@ -84,8 +84,11 @@ public class OrderDetailService {
                     result.setNumberOfRooms(orderDetailResult.getNumberOfRooms());
                     result.setLastArrivalTime(orderDetailResult.getLatestArrivalTime());
                     String customerNames = "";
-                    for (OrderRoom orderRoom : orderDetailResult.getOrderRooms()) {
-                        customerNames += orderRoom.getCustomers().get(0).getName();
+                    for (int i = 0; i < orderDetailResult.getOrderRooms().size(); i++) {
+                        customerNames += orderDetailResult.getOrderRooms().get(i).getCustomers().get(0).getName();
+                        if (i + 1 != orderDetailResult.getOrderRooms().size()) {
+                            customerNames += "；";
+                        }
                     }
                     result.setCustomerNames(customerNames);
                     result.setContactPhone(orderDetailResult.getContact().getMobile());
@@ -152,6 +155,7 @@ public class OrderDetailService {
 
                     result.setBookingDate(orderDetailResult.getCreationDate());
                     result.setTotalPrice(orderDetailResult.getTotalPrice());
+                    result.setCurrencyCode(orderDetailResult.getCurrencyCode() == null? "RMB": orderDetailResult.getCurrencyCode().name());
                     result.setPaymentType(orderDetailResult.getPaymentType().name().equals("SelfPay")?"现付":"预付");
                     result.setPenalty(orderDetailResult.getPenaltyToCustomer());
 
@@ -212,18 +216,19 @@ public class OrderDetailService {
                     break;
             }
             orderDo.setNeedPay(orderDetail.getCreditCard().isIsPayable());
-            orderDo.setCancelTime(orderDetail.getCancelTime());
-            orderDo.setContactPhone(orderDetail.getContact().getMobile());
-            orderDo.setTotalPrice(orderDetail.getTotalPrice().doubleValue());
-            orderDo.setRatePlanId(orderDetail.getRatePlanId());
-            orderDo.setRoomTypeId(orderDetail.getRoomTypeId());
-            orderDo.setHotelId(orderDetail.getHotelId());
-            orderDo.setShowStatus(orderDetail.getShowStatus());
-            orderDo.setHotelName(orderDetail.getHotelName());
-            orderDo.setRoomName(orderDetail.getRoomTypeName());
-            orderDo.setRatePlanName(orderDetail.getRatePlanName());
         }
 
+        orderDo.setCancelTime(orderDetail.getCancelTime());
+        orderDo.setContactPhone(orderDetail.getContact().getMobile());
+        orderDo.setTotalPrice(orderDetail.getTotalPrice().doubleValue());
+        orderDo.setCurrencyCode(orderDetail.getCurrencyCode().name());
+        orderDo.setRatePlanId(orderDetail.getRatePlanId());
+        orderDo.setRoomTypeId(orderDetail.getRoomTypeId());
+        orderDo.setHotelId(orderDetail.getHotelId());
+        orderDo.setShowStatus(orderDetail.getShowStatus());
+        orderDo.setHotelName(orderDetail.getHotelName());
+        orderDo.setRoomName(orderDetail.getRoomTypeName());
+        orderDo.setRatePlanName(orderDetail.getRatePlanName());
         orderDao.updateOrder(orderDo);
     }
 }

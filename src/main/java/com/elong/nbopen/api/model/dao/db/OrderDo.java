@@ -74,6 +74,11 @@ public class OrderDo {
      */
     private Double payAmount;
 
+    /**
+     * 货币类型
+     */
+    private String currencyCode;
+
     public Integer getId() {
         return id;
     }
@@ -280,5 +285,13 @@ public class OrderDo {
 
     public void setPayAmount(Double payAmount) {
         this.payAmount = payAmount;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
     }
 }

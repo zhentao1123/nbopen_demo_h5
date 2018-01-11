@@ -122,6 +122,15 @@ function getDetail() {
             + '<span id="aMoreHotelInfo">更多信息<i class="glyphicon glyphicon-chevron-right"></i></span>';
         $('#divHotelSimpelInfo').html(hotelSimpleInfoHtml);
 
+        // 酒店经纬度处理
+        var map = new BMap.Map("allmap");
+        var point = new BMap.Point(result.longitude, result.latitude);
+        map.centerAndZoom(point, 12);
+        map.addOverlay(new BMap.Marker(point));
+        // 初始化地图， 设置中心点坐标和地图级别
+        var top_right_navigation = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL});
+        map.addControl(top_right_navigation);
+
         // 酒店设施信息处理
         var facilityHtml = "";
         if (result.facilities != null && result.facilities != "") {
@@ -184,7 +193,7 @@ function getDetail() {
                     roomHtml += '<div id="collapse'+ i +'" class="panel-collapse collapse my-rateplan-info">';
                     $.each(roomInfo.ratePlanList, function (i, ratePlanInfo) {
                         roomHtml += '<div class="panel-body"><div><span>' + ratePlanInfo.ratePlanName + '</span>'
-                                + '<div>'+ ratePlanInfo.cancelRule +'</div></div><div>' + changeCurrency(ratePlanInfo.currencyCode) + ratePlanInfo.totalRate + '</div>'
+                                + '<div>'+ (ratePlanInfo.cooperationType == 1? "艺龙": "代理") + "&nbsp;&nbsp;&nbsp;" + ratePlanInfo.cancelRule +'</div></div><div>' + changeCurrency(ratePlanInfo.currencyCode) + ratePlanInfo.totalRate + '</div>'
                                 + '<div name="divBooking" roomTypeId="'+ ratePlanInfo.roomTypeId+'" ratePlanId="'+ratePlanInfo.ratePlanId+'"> <span>订</span> <div>' + cahngePaymentType(ratePlanInfo.paymentType) + '</div> </div> </div>';
                     });
                 }
@@ -192,6 +201,7 @@ function getDetail() {
             });
             $('#divRooms').html(listRoomHtml);
         }
+
         $('div[name="divBooking"]').click(function () {
             // 如果没有user，那么需要先登录
             if ($('#inputUser').val() == null || $('#inputUser').val() == "" || $('#inputUser').val() == "null") {

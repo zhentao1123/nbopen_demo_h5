@@ -1,6 +1,8 @@
 var pageIndex = 1;
 var arrivalDateMark = moment().format('YYYY-MM-DD');
 var departureDateMark = moment().add('days', 1).format('YYYY-MM-DD');
+var cityCodeMark = "";
+var cityNameMark = "";
 $(function() {
 
     $('#spanOrder').click(function() {
@@ -11,8 +13,6 @@ $(function() {
         }
     });
 
-    $("[name='daterangepicker_start']").val(moment().format('YYYY-MM-DD'));
-    $("[name='daterangepicker_end']").val(moment().add('days', 1).format('YYYY-MM-DD'));
     $('#dateSelect').daterangepicker({
         "dateLimit": {
             "days": 30
@@ -57,9 +57,23 @@ $(function() {
     }, function(start, end, label) {
         $("[name='daterangepicker_start']").val(start.format("YYYY-MM-DD"));
         $("[name='daterangepicker_end']").val(end.format("YYYY-MM-DD"));
+        document.cookie = 'arrivalDate=' + start.format("YYYY-MM-DD");
+        document.cookie = 'departureDate=' + end.format("YYYY-MM-DD");
         pageIndex = 1;
         searchHotelList();
     });
+
+    if (getCookie("arrivalDate") != "" && getCookie("departureDate") != "") {
+        $("[name='daterangepicker_start']").val(getCookie("arrivalDate"));
+        $("[name='daterangepicker_end']").val(getCookie("departureDate"));
+        $('#dateSelect').val($("[name='daterangepicker_start']").val() + ' 到 ' + $("[name='daterangepicker_end']").val());
+    } else {
+        $("[name='daterangepicker_start']").val(moment().format('YYYY-MM-DD'));
+        $("[name='daterangepicker_end']").val(moment().add('days', 1).format('YYYY-MM-DD'));
+    }
+
+    var cityCodeMark = getCookie("cityCode");
+    var cityNameMark = getCookie("cityName");
 
     var cityPicker = new IIInsomniaCityPicker({
         data: cityData,
@@ -68,18 +82,68 @@ $(function() {
         hideCityInput: '#city',
         hideProvinceInput: '#province',
         callback: function(city_id){
+            document.cookie = 'cityCode=' + city_id;
+            document.cookie = 'cityName=' + escape($('#cityChoice').val());
             pageIndex = 1;
             searchHotelList();
         }
     });
 
     cityPicker.init();
+    if (cityCodeMark != "" && cityNameMark != "" && cityCodeMark != $('#city').val()) {
+        $('#city').val(cityCodeMark);
+        $('#cityChoice').val(cityNameMark);
+    }
 
+    if (getCookie("lowRate") != "" && getCookie("highRate") != "") {
+        if (getCookie("lowRate") == "-1") {
+            $('#btnRate').html('价格 不限<span style="display: none" lowrate="-1" highrate="-1"></span>' +
+                '<span class="caret"></span>');
+        } else {
+            $('#btnRate').html('价格： '+getCookie("lowRate") + '-' + getCookie("highRate")+'元<span style="display: none" lowrate="-1" highrate="-1"></span>' +
+                '<span class="caret"></span>');
+        }
+        $('#btnRate').find("span:nth-child(1)").attr("lowrate", getCookie("lowRate"));
+        $('#btnRate').find("span:nth-child(1)").attr("highrate", getCookie("highRate"));
+    }
+
+    if (getCookie("sortType") != "") {
+        $('#btnSort').find("span:nth-child(1)").attr("value", getCookie("sortType"));
+        if (getCookie("sortType") == "StarRankDesc") {
+            $('#btnSort').html('推荐星级降序<span style="display:none;" value="StarRankDesc"></span>' +
+                '<span class="caret"></span>');
+        } else if(getCookie("sortType") == "RateAsc") {
+            $('#btnSort').html('价格升序<span style="display:none;" value="RateAsc"></span>' +
+                '<span class="caret"></span>');
+        } else if(getCookie("sortType") == "RateDesc") {
+            $('#btnSort').html('价格降序<span style="display:none;" value="RateDesc"></span>' +
+                '<span class="caret"></span>');
+        }
+
+    }
     $('div[name="divSelect"]').find('ul').find('li').bind('click', function(){
         pageIndex = 1;
         $(this).parent().parent().find('button').html($(this).find('a').html() + '<span class="caret"></span>');
+        if ($(this).parent().parent().find('button').attr("id") == "btnRate") {
+            document.cookie = 'lowRate=' + $('#btnRate').find("span:nth-child(1)").attr("lowrate");
+            document.cookie = 'highRate=' + $('#btnRate').find("span:nth-child(1)").attr("highrate");
+        }
+        if ($(this).parent().parent().find('button').attr("id") == "btnSort") {
+            document.cookie = 'sortType=' + $('#btnSort').find("span:nth-child(1)").attr("value");
+        }
         searchHotelList();
     });
+
+    var cookieStarRate = getCookie("starRate");
+    if (cookieStarRate != "") {
+        $('button[name="btnStarRate"]').each(function(i, info) {
+            if (cookieStarRate.indexOf(info.getAttribute("value")) >= 0) {
+                info.setAttribute("class", "btn btn-info");
+            }
+        });
+    } else {
+        $('#btnStarRateDefault').attr("class", "btn btn-info");
+    }
 
     $('button[name="btnStarRate"]').click(function() {
         pageIndex = 1;
@@ -115,6 +179,17 @@ $(function() {
                 }
             }
         }
+
+        $('button[name="btnStarRate"]').each(function(i, info) {
+            if (info.getAttribute("class").indexOf("btn btn-info") >= 0) {
+                if (info.getAttribute("id") == "btnStarRateDefault") {
+                    document.cookie = "starRate=" + "-1";
+                    return false;
+                } else {
+                    document.cookie = "starRate=" + getCookie("starRate=") + info.getAttribute("value") + ",";;
+                }
+            }
+        });
         searchHotelList();
     });
 
@@ -123,8 +198,12 @@ $(function() {
         searchHotelList();
     });
 
+    if (getCookie("queryText") != "") {
+        $('#inputHotelOrLocation').val(getCookie("queryText"));
+    }
     $('#btnSearch').click(function () {
         pageIndex = 1;
+        document.cookie = 'queryText=' + escape($('#inputHotelOrLocation').val());
         searchHotelList();
     });
 

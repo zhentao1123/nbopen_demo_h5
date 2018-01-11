@@ -40,7 +40,7 @@ public class HotelDetailService {
         condition.setDepartureDate(request.getDepartureDate());
         condition.setHotelIds(request.getHotelId());
         condition.setPaymentType(EnumPaymentType.valueOf(CommonService.SALE_PAYMENT_TYPE));
-        condition.setOptions("1,2,3,4");
+        condition.setOptions("1,2,3,4,8");
 
         HotelDetailResult detailResult = null;
         try {
@@ -122,11 +122,15 @@ public class HotelDetailService {
             }
             /******************** 担保规则处理 **********************/
 
+            /******************** 酒店基础信息 **********************/
             result.setHotelName(hotel.getDetail().getHotelName());
             result.setHotelPhone(hotel.getDetail().getPhone());
             result.setAddress(hotel.getDetail().getAddress());
             result.setGeneralAmenities(hotel.getDetail().getGeneralAmenities());
             result.setTraffic(hotel.getDetail().getTraffic());
+            result.setLatitude(hotel.getDetail().getLatitude());
+            result.setLongitude(hotel.getDetail().getLongitude());
+            /******************** 酒店基础信息 **********************/
 
             if (hotel.getDetail().getStarRate() == 0) {
                 if (hotel.getDetail().getCategory() >= 0 && hotel.getDetail().getCategory() <= 2) {
@@ -190,6 +194,9 @@ public class HotelDetailService {
                         ratePlanResult.setTotalRate(ratePlan.getTotalRate());
                         ratePlanResult.setPaymentType(ratePlan.getPaymentType().name());
                         ratePlanResult.setRoomTypeId(ratePlan.getRoomTypeId());
+                        if (ratePlan.getCooperationType() != null) {
+                            ratePlanResult.setCooperationType(ratePlan.getCooperationType());
+                        }
 
                         // 最低价格判断逻辑
                         if (lowRate < 0) {
