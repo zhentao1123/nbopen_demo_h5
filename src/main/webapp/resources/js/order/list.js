@@ -52,9 +52,9 @@ function getOrders() {
         $.each(result.orders, function (i, info) {
             listHtml += '<div class="panel panel-default">' +
                 '<div name="divOrder" orderid="'+info.orderId+'" class="panel-body my-bookinginfo">' +
-                '<span>'+info.showStatus+'</span><span></span><br/><hr />' +
+                '<span>'+info.showStatus+'</span><span>订单编号：'+info.orderId+'</span><br/><hr />' +
                 '<span>'+info.hotelName+'</span><br />' +
-                '<span>'+info.roomName+'</span><span>'+info.paymentType+'</span><span>'+changeCurrency(info.currencyCode)+info.totalPrice+'</span><br />' +
+                '<span>'+info.roomName+'（'+info.contactName+'）</span><span>'+info.paymentType+'</span><span>'+changeCurrency(info.currencyCode)+info.totalPrice+'</span><br />' +
                 '<span>'+info.dateDescription+'</span><span>'+info.numberOfDays+'晚'+info.numberOfRooms+'间</span><hr />' +
                 '<div class="my-btn-group">' ;
             if (info.bCancel) {
@@ -85,6 +85,18 @@ function getOrders() {
         });
 
         $('button[name="btnCancel"]').click(function (event) {
+            //取消事件冒泡
+            var e=arguments.callee.caller.arguments[0]||event;
+            if (e && e.stopPropagation) {
+                // this code is for Mozilla and Opera
+                e.stopPropagation();
+            } else if (window.event) {
+                // this code is for IE
+                window.event.cancelBubble = true;
+            }
+            if (!confirm("确定取消订单吗？")) {
+                return;
+            }
             var url = "/api/order/cancelOrder";
             var req = {
                 "orderId": parseInt($(this).attr("orderId"))
@@ -97,15 +109,7 @@ function getOrders() {
             }
             window.location.reload(true);
 
-            //取消事件冒泡
-            var e=arguments.callee.caller.arguments[0]||event;
-            if (e && e.stopPropagation) {
-                // this code is for Mozilla and Opera
-                e.stopPropagation();
-            } else if (window.event) {
-                // this code is for IE
-                window.event.cancelBubble = true;
-            }
+
         });
 
         $('button[name="btnPay"]').click(function (event) {

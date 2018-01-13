@@ -52,6 +52,7 @@ public class OrderListService {
                     simpleOrderResult.setPaymentType(orderDo.getPaymentType() == 0? "现付": "预付");
                     simpleOrderResult.setTotalPrice(new BigDecimal(orderDo.getTotalPrice()));
                     simpleOrderResult.setCurrencyCode(StringUtils.isBlank(orderDo.getCurrencyCode())? "RMB": orderDo.getCurrencyCode());
+                    simpleOrderResult.setContactName(orderDo.getContactName());
 
                     // 入离日期描述
                     String[] weekOfDays = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};

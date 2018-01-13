@@ -30,6 +30,8 @@ public class SimpleOrderResult {
 
     private String roomName;
 
+    private String contactName;
+
     private Integer numberOfRooms;
 
     private BigDecimal totalPrice;
@@ -138,5 +140,13 @@ public class SimpleOrderResult {
 
     public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
     }
 }

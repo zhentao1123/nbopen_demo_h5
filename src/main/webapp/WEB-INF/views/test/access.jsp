@@ -57,8 +57,11 @@
                 <canvas class="J_codeimg" id="myCanvas" onclick="Code();">对不起，您的浏览器不支持canvas，请下载最新版浏览器!</canvas>
             </div>
         </div>
-        <div class="login_fields__submit">
-            <input type="button" value="登录/注册">
+        <div class="login_fields__submit" style="top: 50px; left: -10px;">
+            <input id="btnLogin" type="button" method="login" value="登录">
+        </div>
+        <div class="login_fields__submit" style="position: absolute; top: 176px; left: 170px;">
+            <input id="btnRegister" type="button" method="register" value="注册">
         </div>
     </div>
     <div class="success">
@@ -82,7 +85,7 @@
 <script type="text/javascript" src="/resources/js/test/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/resources/js/test/stopExecutionOnTimeout.js?t=1"></script>
 <script type="text/javascript" src="/resources/plugins/layui/layui.js"></script>
-<script type="text/javascript" src="/resources/js/test/Particleground.js"></script>
+<%--<script type="text/javascript" src="/resources/js/test/Particleground.js"></script>--%>
 <script type="text/javascript" src="/resources/js/test/Treatment.js"></script>
 <script type="text/javascript" src="/resources/js/test/jquery.mockjax.js"></script>
 <script type="text/javascript">
@@ -92,6 +95,7 @@
 
     var truelogin = "123456";
     var truepwd = "123456";
+    var method = "login";
 
     var CodeVal = 0;
     Code();
@@ -116,14 +120,14 @@
     $(document).keypress(function (e) {
         // 回车键事件
         if (e.which == 13) {
-            $('input[type="button"]').click();
+            $('#btnLogin').click();
         }
     });
     //粒子背景特效
-    $('body').particleground({
-        dotColor: '#E8DFE8',
-        lineColor: '#133b88'
-    });
+    // $('body').particleground({
+    //     dotColor: '#E8DFE8',
+    //     lineColor: '#133b88'
+    // });
     $('input[name="pwd"]').focus(function () {
         $(this).attr('type', 'password');
     });
@@ -148,10 +152,11 @@
         }
     });
     var open = 0;
+
     layui.use('layer', function () {
 
-        //非空验证
-        $('input[type="button"]').click(function () {
+        $('#btnLogin').click(function () {
+            method = "login";
             var login = $('input[name="login"]').val();
             var pwd = $('input[name="pwd"]').val();
             var code = $('input[name="code"]').val();
@@ -161,6 +166,8 @@
                 ErroAlert('请输入密码');
             } else if (code == '' || code.length != 4) {
                 ErroAlert('输入验证码');
+            } else if(code.toUpperCase() != CodeVal.toUpperCase()) {
+                ErroAlert('验证码错误');
             } else {
                 //认证中..
                 $('.login').addClass('test'); //倾斜特效
@@ -182,7 +189,8 @@
                 //登录
                 var JsonData = {
                     "userName": login,
-                    "password": pwd
+                    "password": pwd,
+                    "method": method
                 };
                 //此处做为ajax内部判断
                 var url = "/test/loginRequest";
@@ -217,13 +225,91 @@
                                 //跳转操作
                                 window.location = "/view/hotel/list?user=" + login;
                             } else {
-                                AjaxErro(data.message);
+                                ErroAlert(data.message);
                             }
                         }, 2400);
                     })
             }
-        })
+        });
+
     })
+
+    $('#btnRegister').click(function () {
+        method = "register";
+        var login = $('input[name="login"]').val();
+        var pwd = $('input[name="pwd"]').val();
+        var code = $('input[name="code"]').val();
+        if (login == '') {
+            ErroAlert('请输入您的账号');
+        } else if (pwd == '') {
+            ErroAlert('请输入密码');
+        } else if (code == '' || code.length != 4) {
+            ErroAlert('输入验证码');
+        } else if(code.toUpperCase() != CodeVal.toUpperCase()) {
+            ErroAlert('验证码错误');
+        } else {
+            //认证中..
+            $('.login').addClass('test'); //倾斜特效
+            setTimeout(function () {
+                $('.login').addClass('testtwo'); //平移特效
+            }, 300);
+            setTimeout(function () {
+                $('.authent').show().animate({ right: -320 }, {
+                    easing: 'easeOutQuint',
+                    duration: 600,
+                    queue: false
+                });
+                $('.authent').animate({ opacity: 1 }, {
+                    duration: 200,
+                    queue: false
+                }).addClass('visible');
+            }, 500);
+
+            //登录
+            var JsonData = {
+                "userName": login,
+                "password": pwd,
+                "method": method
+            };
+            //此处做为ajax内部判断
+            var url = "/test/loginRequest";
+
+            AjaxPost(url, JsonData,
+                function () {
+                    //ajax加载中
+                },
+                function (data) {
+                    //ajax返回
+                    //认证完成
+                    setTimeout(function () {
+                        $('.authent').show().animate({ right: 90 }, {
+                            easing: 'easeOutQuint',
+                            duration: 600,
+                            queue: false
+                        });
+                        $('.authent').animate({ opacity: 0 }, {
+                            duration: 200,
+                            queue: false
+                        }).addClass('visible');
+                        $('.login').removeClass('testtwo'); //平移特效
+                    }, 2000);
+                    setTimeout(function () {
+                        $('.authent').hide();
+                        $('.login').removeClass('test');
+                        if (data.success) {
+                            //登录成功
+                            $('.login div').fadeOut(100);
+                            $('.success').fadeIn(1000);
+                            $('.success').html(data.message);
+                            //跳转操作
+                            window.location = "/view/hotel/list?user=" + login;
+                        } else {
+                            ErroAlert(data.message);
+                        }
+                    }, 2400);
+                })
+        }
+    });
     var fullscreen = function () {
         elem = document.body;
         if (elem.webkitRequestFullScreen) {

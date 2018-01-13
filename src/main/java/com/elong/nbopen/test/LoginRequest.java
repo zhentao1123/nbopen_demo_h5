@@ -6,6 +6,8 @@ public class LoginRequest {
 
     private String password;
 
+    private String method;
+
     public String getUserName() {
         return userName;
     }
@@ -21,4 +23,13 @@ public class LoginRequest {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
 }

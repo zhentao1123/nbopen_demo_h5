@@ -43,7 +43,13 @@ $(function(){
     });
 
     $('#btnCreateOrder').click(function () {
-        createOrder();
+        $('#btnCreateOrder').attr('disabled', true);
+        $('#loadingModal').modal({backdrop: 'static', keyboard: false});
+        setTimeout(function(){
+            createOrder();
+            $("#loadingModal").modal('hide');
+            $('#btnCreateOrder').attr('disabled', false);
+        },2000);
     });
 });
 
