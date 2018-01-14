@@ -212,7 +212,7 @@ $(function() {
 
 function searchHotelList() {
 
-    var city = $('#city').val();
+    var city = $('#city').attr('value');
     var arrivalDate = $("[name='daterangepicker_start']").val();
     var departureDate = $("[name='daterangepicker_end']").val();
     var queryText = $('#inputHotelOrLocation').val();

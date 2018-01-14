@@ -91,7 +91,7 @@ public class CommonService {
             while(inters.hasMoreElements()) {
                 NetworkInterface inter = inters.nextElement();
                 mac =inter.getHardwareAddress();
-                if (mac != null) {
+                if (mac != null && mac.length > 0) {
                     StringBuffer sb = new StringBuffer();
                     for(int j=0;j<mac.length;j++){
                         //mac[i] & 0xFF 是为了把byte转化为正整数

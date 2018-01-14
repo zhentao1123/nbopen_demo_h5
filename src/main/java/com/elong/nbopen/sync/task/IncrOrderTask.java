@@ -47,13 +47,6 @@ public class IncrOrderTask extends Thread implements InitializingBean {
     // 不执行任务时睡眠时间
     private long noTaskSleep = CommonService.INCR_ORDER_FREQUENCY * beatTimesOfDie;
 
-//    public IncrOrderTask(IIncrOrderManagerDao incrOrderManagerDao, IOrderDao orderDao, HotelIncrOrderApi incrOrderApi, HotelOrderDetailApi hotelOrderDetailApi) {
-//        this.incrOrderManagerDao = incrOrderManagerDao;
-//        this.orderDao = orderDao;
-//        this.incrOrderApi = incrOrderApi;
-//        this.hotelOrderDetailApi = hotelOrderDetailApi;
-//    }
-
     public void run() {
         while (true) {
             readTask();
