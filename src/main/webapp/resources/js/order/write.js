@@ -131,7 +131,7 @@ function createOrder() {
         "earliestArrivalTime": (nextHour.substring(0,1) == "0"? arrivalNextDate: arrivalDate) + " " + nextHour + ":00",
         "latestArrivalTime": ($('#btnArrivalTime').attr("value").substring(0,1) == "0"? arrivalNextDate: arrivalDate) + " " + $('#btnArrivalTime').attr("value"),
         "numberOfRooms": $("#btnRoomNum").attr("value"),
-        "totalPrice": $('#inputTotalRate').val()
+        "totalPrice": parseFloat($('#inputTotalRate').val()) * parseInt($("#btnRoomNum").attr("value"))
     };
 
     var validateResult = ajaxCommonForJson(validateUrl, "POST", validateReq);
@@ -193,7 +193,7 @@ function createOrder() {
         "paymentType": $('#inputPaymentType').val(),
         "numberOfRooms": $("#btnRoomNum").attr("value"),
         "currencyCode": $('#inputTotalRate').attr("currencyCode"),
-        "totalPrice": $('#inputTotalRate').val(),
+        "totalPrice": parseFloat($('#inputTotalRate').val()) * parseInt($("#btnRoomNum").attr("value")),
         "needInvoice": needInvoice,
         "invoice": invoice,
         "customerType": $('#inputCustomerType').val(),

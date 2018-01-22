@@ -72,6 +72,11 @@ public class OrderDetailForPageResult {
 
     private BigDecimal penalty;
 
+    /**
+     * 需要支付或担保的金额，担保时不一定与totalPrice相等
+     */
+    private BigDecimal payAmount;
+
     public boolean isSuccess() {
         return success;
     }
@@ -286,5 +291,13 @@ public class OrderDetailForPageResult {
 
     public void setValueAdds(String valueAdds) {
         this.valueAdds = valueAdds;
+    }
+
+    public BigDecimal getPayAmount() {
+        return payAmount;
+    }
+
+    public void setPayAmount(BigDecimal payAmount) {
+        this.payAmount = payAmount;
     }
 }

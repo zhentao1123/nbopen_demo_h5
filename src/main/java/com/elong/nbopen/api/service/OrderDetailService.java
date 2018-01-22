@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,6 +71,19 @@ public class OrderDetailService {
                             result.setLastPayTime(orderDetailResult.getCreditCard().getLatestPayTime());
                         }
                         result.setbPayable(orderDetailResult.getCreditCard().isIsPayable());
+                    }
+                    if (orderDetailResult.getPaymentType().equals(EnumPaymentType.SelfPay)) {
+                        if (orderDetailResult.getGuaranteeRule() != null) {
+                            if (orderDetailResult.getGuaranteeRule().getGuaranteeType().equals(EnumGuaranteeMoneyType.FirstNightCost)) {
+                                result.setPayAmount(new BigDecimal(orderDetailResult.getNightlyRates().get(0).getMember().doubleValue() * orderDetailResult.getNumberOfRooms()));
+                            } else {
+                                result.setPayAmount(orderDetailResult.getTotalPrice());
+                            }
+                        } else {
+                            result.setPayAmount(new BigDecimal(0));
+                        }
+                    } else {
+                        result.setPayAmount(orderDetailResult.getTotalPrice());
                     }
                     result.setbCancel(orderDetailResult.isIsCancelable());
                     result.setHotelId(orderDetailResult.getHotelId());

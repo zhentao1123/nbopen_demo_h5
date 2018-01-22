@@ -38,6 +38,11 @@ public class SimpleOrderResult {
 
     private String currencyCode;
 
+    /**
+     * 需要支付或担保的金额，担保金额与totalPrice不一定一致
+     */
+    private BigDecimal payAmount;
+
     public long getOrderId() {
         return orderId;
     }
@@ -148,5 +153,13 @@ public class SimpleOrderResult {
 
     public void setContactName(String contactName) {
         this.contactName = contactName;
+    }
+
+    public BigDecimal getPayAmount() {
+        return payAmount;
+    }
+
+    public void setPayAmount(BigDecimal payAmount) {
+        this.payAmount = payAmount;
     }
 }

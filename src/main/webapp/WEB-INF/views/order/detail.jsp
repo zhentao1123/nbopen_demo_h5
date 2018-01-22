@@ -40,6 +40,7 @@
 
 <!-- 订单id隐藏域信息 -->
 <input id="inputOrderId" style="display:none;" value="${orderId}"/>
+<input id="inputPayAmount" style="display: none" value="0"/>
 <!-- 登录信息隐藏域 -->
 <input id="inputUser" style="display: none" value="${user}">
 

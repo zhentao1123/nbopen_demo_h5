@@ -59,13 +59,17 @@ public class AccessController {
         params.put("userName", requestBody.getUserName());
 
         UserDo userDo = userDao.queryUserByName(params);
-        if (userDo == null && requestBody.getMethod().equals("register")) {
-            params.put("password", requestBody.getPassword());
-            if(userDao.addUser(params)>0) {
-                result.setSuccess(true);
-                result.setMessage("注册用户成功");
+        if (requestBody.getMethod().equals("register")) {
+            if (userDo != null) {
+                result.setMessage("用户名已存在");
             } else {
-                result.setMessage("注册用户失败");
+                params.put("password", requestBody.getPassword());
+                if(userDao.addUser(params)>0) {
+                    result.setSuccess(true);
+                    result.setMessage("注册用户成功");
+                } else {
+                    result.setMessage("注册用户失败");
+                }
             }
         } else if (userDo == null) {
             result.setMessage("该用户名不存在");

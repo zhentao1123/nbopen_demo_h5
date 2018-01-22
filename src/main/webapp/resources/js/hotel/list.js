@@ -96,41 +96,48 @@ $(function() {
     }
 
     if (getCookie("lowRate") != "" && getCookie("highRate") != "") {
-        if (getCookie("lowRate") == "-1") {
-            $('#btnRate').html('价格 不限<span style="display: none" lowrate="-1" highrate="-1"></span>' +
-                '<span class="caret"></span>');
-        } else {
-            $('#btnRate').html('价格： '+getCookie("lowRate") + '-' + getCookie("highRate")+'元<span style="display: none" lowrate="-1" highrate="-1"></span>' +
-                '<span class="caret"></span>');
-        }
-        $('#btnRate').find("span:nth-child(1)").attr("lowrate", getCookie("lowRate"));
-        $('#btnRate').find("span:nth-child(1)").attr("highrate", getCookie("highRate"));
+        $('button[name="btnRate"]').each(function (i, info) {
+            if (info.getAttribute('lowRate') == getCookie("lowRate")) {
+                info.setAttribute('class', 'btn btn-info');
+            } else {
+                info.setAttribute('class', 'btn btn-default');
+            }
+        });
+    } else {
+        document.cookie = 'lowRate=-1';
+        document.cookie = 'highRate=-1';
     }
 
     if (getCookie("sortType") != "") {
-        $('#btnSort').find("span:nth-child(1)").attr("value", getCookie("sortType"));
-        if (getCookie("sortType") == "StarRankDesc") {
-            $('#btnSort').html('推荐星级降序<span style="display:none;" value="StarRankDesc"></span>' +
-                '<span class="caret"></span>');
-        } else if(getCookie("sortType") == "RateAsc") {
-            $('#btnSort').html('价格升序<span style="display:none;" value="RateAsc"></span>' +
-                '<span class="caret"></span>');
-        } else if(getCookie("sortType") == "RateDesc") {
-            $('#btnSort').html('价格降序<span style="display:none;" value="RateDesc"></span>' +
-                '<span class="caret"></span>');
-        }
-
+        $('button[name="btnSortType"]').each(function (i, info) {
+            if (info.getAttribute('value') == getCookie("sortType")) {
+                info.setAttribute('class', 'btn btn-info');
+            } else {
+                info.setAttribute('class', 'btn btn-default');
+            }
+        });
+    } else {
+        document.cookie = "sortType=Default";
     }
-    $('div[name="divSelect"]').find('ul').find('li').bind('click', function(){
+
+    $('button[name="btnRate"]').click(function () {
         pageIndex = 1;
-        $(this).parent().parent().find('button').html($(this).find('a').html() + '<span class="caret"></span>');
-        if ($(this).parent().parent().find('button').attr("id") == "btnRate") {
-            document.cookie = 'lowRate=' + $('#btnRate').find("span:nth-child(1)").attr("lowrate");
-            document.cookie = 'highRate=' + $('#btnRate').find("span:nth-child(1)").attr("highrate");
-        }
-        if ($(this).parent().parent().find('button').attr("id") == "btnSort") {
-            document.cookie = 'sortType=' + $('#btnSort').find("span:nth-child(1)").attr("value");
-        }
+        $('button[name="btnRate"]').each(function (i, info) {
+            info.setAttribute('class', 'btn btn-default')
+        });
+        $(this).attr('class', 'btn btn-info');
+        document.cookie = 'lowRate=' + $(this).attr('lowRate');
+        document.cookie = 'highRate=' + $(this).attr('highRate');
+        searchHotelList();
+    });
+
+    $('button[name="btnSortType"]').click(function () {
+        pageIndex = 1;
+        $('button[name="btnSortType"]').each(function (i, info) {
+            info.setAttribute('class', 'btn btn-default')
+        });
+        $(this).attr('class', 'btn btn-info');
+        document.cookie = 'sortType=' + $(this).attr('value');
         searchHotelList();
     });
 
@@ -233,10 +240,10 @@ function searchHotelList() {
         }
     });
 
-    var lowRate = parseInt($('#btnRate').find("span:nth-child(1)").attr("lowrate"));
-    var highRate = parseInt($('#btnRate').find("span:nth-child(1)").attr("highrate"));
+    var lowRate = getCookie('lowRate');
+    var highRate = getCookie('highRate');
 
-    var sort = $('#btnSort').find("span:nth-child(1)").attr("value");
+    var sort = getCookie('sortType');
 
     if (lowRate == -1) {
         lowRate = null;

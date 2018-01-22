@@ -63,7 +63,7 @@ function getOrders() {
             }
             if (info.bPayable) {
                 listHtml += '<div class="btn-group my-btn-order">' +
-                    '<button name="btnPay" orderId="'+info.orderId+'" class="btn btn-danger">去支付</button></div>';
+                    '<button name="btnPay" orderId="'+info.orderId+'" payAmount="'+info.payAmount+'" class="btn btn-danger">去支付</button></div>';
             }
 
             listHtml += '</div></div></div>';
@@ -113,7 +113,34 @@ function getOrders() {
         });
 
         $('button[name="btnPay"]').click(function (event) {
+            /** 新增的收银台支付方式，支持信用卡、QQ支付、支付宝、微信支付 **/
+            if (parseFloat($(this).attr("payAmount")) == 0) {
+                alert("此订单不需要支付");
+            } else {
+                var cashDeskRequestUrl = "/api/order/getCashDesk";
+                var cashDeskRequest = {
+                    "orderId": $(this).attr("orderId"),
+                    "amount": $(this).attr("payAmount")
+                };
+                var cashDeskResult = ajaxCommonForJson(cashDeskRequestUrl, "POST", cashDeskRequest);
+                if (cashDeskResult != null) {
+                    if (cashDeskResult.payUrl != null && cashDeskResult.payUrl != "") {
+                        window.open(cashDeskResult.payUrl);
+                    } else if (cashDeskResult.errorMessage != null && cashDeskResult.errorMessage != "") {
+                        alert(cashDeskResult.errorMessage);
+                    } else {
+                        alert("获取收银台失败，请重试");
+                    }
+                } else {
+                    alert("获取收银台失败，请重试");
+                }
+            }
+
+
+            /** 这是传统的使用信用卡支付的方式
             window.location.href = "/view/order/pay?user="+$('#inputUser').val()+"&orderId="+$(this).attr("orderId");
+            **/
+
             //取消事件冒泡
             var e=arguments.callee.caller.arguments[0]||event;
             if (e && e.stopPropagation) {
