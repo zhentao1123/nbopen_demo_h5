@@ -48,9 +48,9 @@ public class IncrOrderTask extends Thread implements InitializingBean {
     private long noTaskSleep = CommonService.INCR_ORDER_FREQUENCY * beatTimesOfDie;
 
     public void run() {
-//        while (true) {
-//            readTask();
-//        }
+        while (true) {
+            readTask();
+        }
     }
 
     @Transactional
