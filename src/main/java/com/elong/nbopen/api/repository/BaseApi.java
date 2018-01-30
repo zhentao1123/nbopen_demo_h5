@@ -74,11 +74,6 @@ public abstract class BaseApi<T,T2> {
     /*********************************************** end 抽象方法 end******************************************************/
 
     /**
-     * 是否打印请求参数与返回参数
-     */
-    private boolean isVerbosed = true;
-
-    /**
      * 请求、返回参数类型：json/xml
      */
     private String format = "json";
@@ -113,9 +108,6 @@ public abstract class BaseApi<T,T2> {
         }else {
             str = JsonUtil.entity2Json(req);
         }
-        if(isVerbosed){
-            System.out.println("request info:" + str);
-        }
 
         //产生签名
         long epoch = System.currentTimeMillis()/1000;
@@ -129,17 +121,9 @@ public abstract class BaseApi<T,T2> {
         url += "&signature=";
         url += sig;
         url += "&data=" + Tool.encodeUri(str);;
-        if(isVerbosed){
-            System.out.println();
-            System.out.println("request url:" + url);
-        }
 
         //发送请求
         responseData = Http.Send("GET", url, "");
-        if(isVerbosed){
-            System.out.println();
-            System.out.println("response raw data:" + responseData);
-        }
         responseData = responseData.trim();
         responseData = responseData.replaceAll("0001-01-01T00:00:00", "2001-01-01T00:00:00");
 
@@ -157,11 +141,6 @@ public abstract class BaseApi<T,T2> {
     public void setResponseData(String responseData) {
         this.responseData = responseData;
     }
-
-    public void setVerbose(boolean v) {
-        isVerbosed = v;
-    }
-
     public String getFormat() {
         return format;
     }

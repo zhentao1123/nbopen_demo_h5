@@ -1,41 +1,94 @@
-.my-header div div{
-    height: 50px; width: 100%;
+.btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover, .open>.dropdown-toggle.btn-default.focus, .open>.dropdown-toggle.btn-default:focus, .open>.dropdown-toggle.btn-default:hover {
+    color: #333;
+    background-color: #fff;
+    border-color: none;
+}
+.container{
+    padding: 0;
+}
+.row{
+    margin-right: 0; margin-left: 0;
+}
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9{
+    padding-right: 0; padding-left: 0;
+}
+body {
+    background: #eee !important;
+}
+.navbar {
+  min-height: 44px;
+}
+.navbar-default {
+  background-image: none; border-radius: 0; box-shadow: none; margin-bottom: 0;
 }
 .my-header div div div:nth-of-type(1) {
-    position: absolute; width: 30%; text-align: left; line-height: 50px; height: 50px; z-index: 99999;
+    position: absolute; width: 30%; text-align: left; line-height: 44px; height: 44px; z-index: 9999; left: 8px;
 }
 .my-header div div div:nth-of-type(1) span {
-    font-size: 30px; line-height: 50px;
+    font-size: 20px; line-height: 44px; color: #4A4A4A;
 }
 .my-header div div div:nth-of-type(2){
-    position: relative; text-align: center; width: 100%;
+    position: relative; text-align: center; width: 100%; margin-right: 0px;
 }
 .my-header div div div:nth-of-type(2) span{
-    line-height: 50px; font-size: 25px; color: gray;
+    line-height: 44px; font-size: 17px; color: #333;
+}
+.my-header div div{
+    height: 44px; width: 100%;
+}
+.my-header div div div:nth-of-type(3) {
+    position: absolute; width: 10%; top: 0px; right: 0px; line-height: 44px; height: 44px; z-index: 99999;
+}
+.my-header div div div:nth-of-type(3) span {
+    font-size: 20px; line-height: 44px; color: #858585;
+}
+.panel-default{
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    margin-bottom: 10px;
+}
+.panel-default .status{
+    color: #ff500a;
+}
+.panel-default .price{
+    color: #e64340;
 }
 
-.my-order-info span:nth-of-type(4) {
-    color: orange;
+.my-order-info{
+    font-size: 12px;
+    padding: 5px 10px 5px;
 }
-.my-order-info span:nth-of-type(5) {
-    font-size: 8px;
-    margin-left: 40px;
+.panel-default p{
+    line-height: 20px;
+    padding: 8px 0;
+    margin: 0;
 }
-.my-hotel-info span:nth-of-type(2) {
-    color: gray;
+.panel-default .hr{
+    border-top: 1px solid #d8d8d8;
 }
-.my-product-info span:nth-of-type(8) {
-    margin-left: 14px;
+
+
+.my-btn-group {
+    text-align: center;
+    margin: 20px 0;
 }
-.my-product-info span:nth-of-type(16) {
-    margin-left: 14px;
+.my-btn-group button {
+    display: inline-block;
+    margin-right: 10px;
+    width: 40%;
+    height: 36px;
+    line-height: 36px;
+    padding: 0;
+    box-shadow: none;
+    font-size: 14px;
+    text-shadow: none;
 }
-.my-booking-info span:nth-of-type(4) {
-    color: red;
+.my-btn-group .btn-default {
+    border: 1px solid #D8D8D8;
+    background: #fff;
 }
-.my-booking-info span:nth-of-type(6),.my-booking-info span:nth-of-type(8) {
-    margin-left: 28px;
-}
-.my-booking-info span:nth-of-type(7),.my-booking-info span:nth-of-type(9) {
-    color: red;
+.my-btn-group .btn-danger {
+    border: 1px solid #fff;
+    background: #E64340;
 }

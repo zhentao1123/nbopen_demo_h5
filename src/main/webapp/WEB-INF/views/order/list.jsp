@@ -45,46 +45,11 @@
 
 <!-- 订单列表 -->
 <div id="divOrders" class="container">
-    <div class="panel panel-default">
-        <div class="panel-body my-bookinginfo">
-            <span>等待支付</span><span></span><br/>
-            <hr />
-            <span>飘HOME连锁酒店（北京华贸一店）（原雅悦酒店）</span><br />
-            <span>标准双床房</span><span>预付</span><span>￥350</span><br />
-            <span>12月22日（周五） - 12月23日（周六）</span><span>1晚1间</span>
-            <hr />
-            <div class="my-btn-group">
-                <div class="btn-group my-btn-order">
-                    <button class="btn btn-default">取消订单</button>
-                </div>
-
-                <div class="btn-group my-btn-order">
-                    <button class="btn btn-danger">去支付</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-body my-bookinginfo">
-            <span>已经离店</span><span></span><br/>
-            <hr />
-            <span>飘HOME连锁酒店（北京华贸一店）（原雅悦酒店）</span><br />
-            <span>标准大床房</span><span>现付</span><span>￥320</span><br />
-            <span>12月22日（周五） - 12月23日（周六）</span><span>2晚1间</span>
-            <hr />
-            <div class="my-btn-group">
-                <div class="btn-group my-btn-order">
-                    <button class="btn btn-default">再次预订</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 </div>
 <!-- 订单列表 -->
-<div id="pullMoreOrder" style="text-align: center; display: block">点击加载更多订单</div>
+<div id="pullMoreOrder" style="text-align: center; display: block">点击加载更多</div>
 <div id="noOrderInfo" style="text-align: center; display: none">没有更多订单了</div>
 </body>
 

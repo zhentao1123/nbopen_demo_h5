@@ -115,21 +115,35 @@ function getDetail() {
         $("#carouselHotelImage").carousel('cycle');
 
         // 酒店简要信息处理
+        var hotelName = "";
+        hotelName = result.hotelName + '<span>'+result.starRate+'</span>';
+        $('#divHotelName').html(hotelName);
+
+        var addresses = new Array();
+        addresses = result.address.split(/[()]/);
+
         var hotelSimpleInfoHtml = "";
-        hotelSimpleInfoHtml += '<span>酒店名称：</span> ' + result.hotelName + ' <span>('+ result.starRate +')</span><br/>'
-            + '<span>地址：</span> '+ result.address +'<br />'
-            + '<span>电话：</span> '+ result.hotelPhone
-            + '<span id="aMoreHotelInfo">更多信息<i class="glyphicon glyphicon-chevron-right"></i></span>';
+        hotelSimpleInfoHtml += '<p>'+addresses[0];
+        if (addresses.length > 1) {
+            hotelSimpleInfoHtml += '<span class="em">' + addresses[1] + '</span>';
+        }
+        hotelSimpleInfoHtml += '</p>';
+        hotelSimpleInfoHtml += '<p><span class="tel"><i class="glyphicon glyphicon-earphone"></i>'+result.hotelPhone+'</span>' +
+            '<span class="more" id="aMoreHotelInfo">更多信息<i class="glyphicon glyphicon-chevron-right"></i></span></p>';
         $('#divHotelSimpelInfo').html(hotelSimpleInfoHtml);
 
         // 酒店经纬度处理
-        var map = new BMap.Map("allmap");
-        var point = new BMap.Point(result.longitude, result.latitude);
-        map.centerAndZoom(point, 12);
-        map.addOverlay(new BMap.Marker(point));
-        // 初始化地图， 设置中心点坐标和地图级别
-        var top_right_navigation = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL});
-        map.addControl(top_right_navigation);
+        $('#allmap').click(function () {
+            var mapUrl = 'http://api.map.baidu.com/marker?location='+result.latitude+','+result.longitude+'&title=酒店位置&content='+result.hotelName+'&output=html';
+            window.open(mapUrl);
+        });
+        // var map = new BMap.Map("allmap");
+        // var point = new BMap.Point(result.longitude, result.latitude);
+        // map.centerAndZoom(point, 12);
+        // map.addOverlay(new BMap.Marker(point));
+        // // 初始化地图， 设置中心点坐标和地图级别
+        // var top_right_navigation = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL});
+        // map.addControl(top_right_navigation);
 
         // 酒店设施信息处理
         var facilityHtml = "";
@@ -192,9 +206,14 @@ function getDetail() {
                 if (roomInfo.ratePlanList != null && roomInfo.ratePlanList.length > 0) {
                     roomHtml += '<div id="collapse'+ i +'" class="panel-collapse collapse my-rateplan-info">';
                     $.each(roomInfo.ratePlanList, function (i, ratePlanInfo) {
-                        roomHtml += '<div class="panel-body"><div><span>' + ratePlanInfo.ratePlanName + '</span>'
-                                + '<div>'+ (ratePlanInfo.cooperationType == 1? "艺龙": "代理") + "&nbsp;&nbsp;&nbsp;" + ratePlanInfo.cancelRule +'</div></div><div>' + changeCurrency(ratePlanInfo.currencyCode) + ratePlanInfo.totalRate + '</div>'
-                                + '<div name="divBooking" roomTypeId="'+ ratePlanInfo.roomTypeId+'" ratePlanId="'+ratePlanInfo.ratePlanId+'"> <span>订</span> <div>' + cahngePaymentType(ratePlanInfo.paymentType) + '</div> </div> </div>';
+                        roomHtml += '<div class="panel-body">' +
+                            '                    <p class="p1">' + ratePlanInfo.ratePlanName + '</p>' +
+                            '                    <p class="p2">'+ (ratePlanInfo.cooperationType == 1? "艺龙": "代理") + "&nbsp;&nbsp;&nbsp;" + ratePlanInfo.cancelRule +'</p>' +
+                            '                    <div class="divBooking">' +
+                            '                        <span class="price">'+changeCurrency(ratePlanInfo.currencyCode) + ratePlanInfo.totalRate+'</span>' +
+                            '                        <a name="aBooking" href="#" roomTypeId="'+ratePlanInfo.roomTypeId+'" ratePlanId="'+ratePlanInfo.ratePlanId+'">' + cahngePaymentType(ratePlanInfo.paymentType) + '</a>' +
+                            '                    </div>' +
+                            '                </div>';
                     });
                 }
                 listRoomHtml += roomHtml + '</div></div>';
@@ -202,7 +221,7 @@ function getDetail() {
             $('#divRooms').html(listRoomHtml);
         }
 
-        $('div[name="divBooking"]').click(function () {
+        $('a[name="aBooking"]').click(function () {
             // 如果没有user，那么需要先登录
             if ($('#inputUser').val() == null || $('#inputUser').val() == "" || $('#inputUser').val() == "null") {
                 window.location = $('#inputLoginPage').val();

@@ -159,6 +159,11 @@ function initPage() {
             '<span>'+result.ratePlanName+'</span><span>'+result.roomNum+'间</span><br />' +
             '<span>'+result.dateDescription+'</span><span>共'+result.numberOrDays+'晚</span><br/>' +
             '<span>订单金额：</span><span>￥'+result.totalRate+'</span>';
+
+        productHtml = '<p><span class="name">'+result.hotelName+'</span><em></em></p>' +
+            '            <p><span>'+result.ratePlanName+'</span><span></span><em>'+result.roomNum+'间</em></p>' +
+            '            <p><span>'+result.dateDescription+'</span><em class="blue">共'+result.numberOrDays+'晚</em></p>' +
+            '            <p><span>订单金额：</span><em>￥'+result.totalRate+'</em></p>';
         $('#divProductInfo').html(productHtml);
         $('#inputPayAmount').val(result.payAmount);
     }

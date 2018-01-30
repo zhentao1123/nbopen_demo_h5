@@ -136,7 +136,8 @@ public class IncrOrderTask extends Thread implements InitializingBean {
                             orderDo.setHotelName(orderDetail.getHotelName());
                             orderDo.setRoomName(orderDetail.getRoomTypeName());
                             orderDo.setRatePlanName(orderDetail.getRatePlanName());
-                            orderDo.setBookingTime(orderDetail.getCancelTime());
+                            orderDo.setHotelPhone(orderDetail.getOrderHotel().getPhone());
+                            orderDo.setBookingTime(orderDetail.getCreationDate());
                             orderDo.setCancelTime(orderDetail.getCancelTime());
                             orderDo.setCurrencyCode(orderDetail.getCurrencyCode().name());
                             orderDo.setBookingTime(new Date());
@@ -157,17 +158,25 @@ public class IncrOrderTask extends Thread implements InitializingBean {
                                 orderDo.setNeedPay(false);
                             } else if (orderDetail.getCreditCard() != null) {
                                 orderDo.setNeedPay(orderDetail.getCreditCard().isIsPayable());
+                            } else {
+                                orderDo.setNeedPay(false);
                             }
 
                             // 关联订单是指以为原有订单不能描述用户的实际入住信息，由艺龙客服进行拆单产生的
                             // 即原有的一个订单拆成了两个订单，可以通过hotel.order.related接口获取具体的订单信息
-                            // 此处不做处理，代理如果想做关联订单逻辑可以自行设计
+                            // 此处不做处理，仅将关联订单插入数据库中，代理如果想做关联订单逻辑可以自行设计
                             if (orderDao.updateOrder(orderDo) == 0) {
-                                logger.info("【新增的关联订单：】" + orderDo.getOrderId());
+                                // 关联订单不存在第三方订单号
+                                orderDo.setAffiliateConfirmationId("");
+                                // 关联订单的用户名存在于其父订单
+                                orderDo.setUserId("");
+                                // 收到取消请求的时间
+                                orderDo.setCancelRecieveTime(new SimpleDateFormat("yyyy-MM-dd").parse("1970-01-01"));
+                                orderDao.addOrder(orderDo);
                             }
 
                             // 请求一次订单详情后睡眠100毫秒以防访问频繁
-                            Thread.sleep(100);
+                            Thread.sleep(300);
                         } else {
                             logger.error(orderInfoResult.getCode());
                         }

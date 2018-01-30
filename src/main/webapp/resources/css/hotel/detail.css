@@ -1,42 +1,149 @@
+.container{
+    padding: 0;
+}
+.row{
+    margin-right: 0; margin-left: 0;
+}
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9{
+    padding-right: 0; padding-left: 0;
+}
+body {
+    background: #fff !important;
+}
+.navbar {
+  min-height: 44px;
+}
+.navbar-default {
+  background-image: none; border-radius: 0; box-shadow: none; margin-bottom: 0;
+}
 .my-header div div div:nth-of-type(1) {
-    position: absolute; width: 30%; text-align: left; line-height: 50px; height: 50px; z-index: 9999;
+    position: absolute; width: 30%; text-align: left; line-height: 44px; height: 44px; z-index: 9999; left: 8px;
 }
 .my-header div div div:nth-of-type(1) span {
-    font-size: 30px; line-height: 50px;
+    font-size: 20px; line-height: 44px; color: #4A4A4A;
 }
 .my-header div div div:nth-of-type(2){
     position: relative; text-align: center; width: 100%; margin-right: 0px;
 }
 .my-header div div div:nth-of-type(2) span{
-    line-height: 50px; font-size: 25px; color: gray;
+    line-height: 44px; font-size: 17px; color: #333;
 }
 .my-header div div{
-    height: 50px; width: 100%;
+    height: 44px; width: 100%;
 }
 .my-header div div div:nth-of-type(3) {
-    position: absolute; width: 10%; top: 0px; right: 0px; line-height: 50px; height: 50px; z-index: 99999;
+    position: absolute; width: 10%; top: 0px; right: 0px; line-height: 44px; height: 44px; z-index: 99999;
 }
 .my-header div div div:nth-of-type(3) span {
-    font-size: 30px; line-height: 50px;
+    font-size: 20px; line-height: 44px; color: #858585;
+}
+.hotel-info-con{
+    background: #eee;
+}
+.hotel-info-con .panel-default{
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 10px;
+    position: relative;
+}
+.hotel-info-con .panel-default p:last-child{
+    margin-bottom: 0px;
+}
+.divMoreHotelInfo{
+    display: none;
+    background: #fff;
+    padding-left: 15px;
+}
+.divMoreHotelInfo .panel-default{
+    border-bottom: 1px solid #D8D8D8;
+    box-shadow: none;
 }
 
+.divMoreHotelInfo .panel-default:last-child{
+    border: 0;
+}
+.divMoreHotelInfo .panel-default .panel-body{
+    padding-left: 0;
+}
+.divMoreHotelInfo .panel-default .panel-heading{
+    background: #fff;
+    border: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+.carousel-inner{
+    height: 155px;
+}
+.carousel-inner .item{
+    height: 100%;
+}
 .carousel-inner img {
     width: 100%;
+    height: auto;
 }
-.my-hotelsimpleinfo span:nth-of-type(1) {
-    font-weight:900;
+.carousel-control{
+    display: block;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #000;
+    opacity: .5;
+    font-size: 20px;
+    text-align: center;
+    line-height: 36px;
+    position: absolute;
+    top: 10px;
 }
-.my-hotelsimpleinfo span:nth-of-type(2) {
-    color: orange;
+.carousel-control i{
+    top: 8px;
 }
-.my-hotelsimpleinfo span:nth-of-type(3) {
-    font-weight:900;
+.carousel-control.left{
+    left: 10px;
 }
-.my-hotelsimpleinfo span:nth-of-type(4) {
-    font-weight:900;
+.carousel-control.right{
+    right: 10px;
 }
-.my-hotelsimpleinfo span:nth-of-type(5) {
-    position: absolute; right: 12%; color: blue;
+.allmap{
+    height: 80%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+.allmap img{
+    height: 100%;
+}
+.hotel-name-h{
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    font-size: 18px;
+    color: #fff;
+}
+.hotel-name-h span{
+    display: block;
+    font-size: 14px;
+}
+.my-hotelsimpleinfo{
+    font-size: 12px;
+    color: #000;
+    position: relative;
+    z-index: 2;
+}
+.my-hotelsimpleinfo .em{
+    display: block;
+    color: #9B9B9B;
+}
+.my-hotelsimpleinfo .tel{
+    color: #5B97F8;
+}
+.my-hotelsimpleinfo .tel i{
+    color: #4A4A4A;
+    margin-right: 5px;
+}
+.my-hotelsimpleinfo .more{
+    color: #5B97F8;
+    float: right;
 }
 .btn-date-picker {
     display: inline-block;
@@ -46,58 +153,126 @@
     border: 1px solid #ccc;
     width: 100%;
 }
+
+.panel-group .panel,.panel-group .panel+.panel{
+    margin-bottom: 0;
+    border-radius: 0;
+    border: 0;
+    box-shadow: none;
+    margin-top: 0;
+}
+.panel-group .my-room-info {
+    padding: 9px 10px 8px;
+    border-top: 1px solid #DDD;
+    overflow: hidden;
+    border-radius: 0;
+}
 .my-room-info img {
-    width: 80px; height: 80px;
+    width: 72px; height: 72px; float: left;
 }
 .my-room-info div {
-    position: relative; top: -80px; left: 80px; margin-right: 80px;
+    margin-left: 80px;
+    position: relative;
+}
+.my-room-info div span{
+    display: block;
+    margin-right: 100px;
 }
 .my-room-info div span:nth-of-type(1) {
-    position: absolute; left: 6px; top: 0px; font-size: large;
+    font-size: 15px;
+    line-height: 21px;
 }
 .my-room-info div span:nth-of-type(2) {
-    position: absolute; left: 6px; top: 35px; color: gray;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #B3B2B3;
+    line-height: 17px;
 }
 .my-room-info div span:nth-of-type(3) {
-    position: absolute; right: 10%; top: 55px; color: red; font-size: x-large;
+    position: absolute;
+    top: 26px;
+    right: 26px;
+    line-height: 20px;
+    color: red;
+    font-size: 17px;
+    margin-right: 0;
+    text-align: right;
 }
 .my-room-info div span:nth-of-type(3) span {
-    position: relative; color: gray; font-size: small;
+    display: inline;
+    margin-right: 0;
+    font-size: 12px;
+    margin-left: 3px;
 }
 .my-room-info div span:nth-of-type(4) {
-    position: absolute; left: 95%; top: 35px;
+    position: absolute;
+    top: 28px;
+    right: 6px;
+    margin-right: 0;
+    color: #ACACAC;
+    font-size: 12px;
 }
-.my-rateplan-info div {
-    background: #F4F4F4; height: 60px;
+.my-rateplan-info{
+    margin-top: -1px;
+    background: #eee;
 }
-.my-rateplan-info div span:nth-of-type(1){
-    position: relative; top: -10px; font-size: 20px;
+.my-rateplan-info .panel-body {
+    height: 72px;
+    padding: 10px 15px;
+    font-size: 14px;
+    line-height: 20px;
+    position: relative;
+    border-top: 1px solid #e1e1e1;
 }
-.my-rateplan-info div span:nth-of-type(2){
-    position: relative; top: 10px; left: -60px; color: gray;
+.my-rateplan-info .panel-body:nth-of-type(1){
+    border-top: 0;
 }
-.my-rateplan-info div span:nth-of-type(3){
-    position: relative; left: 30%; color: red; font-size: 20px;
+.my-rateplan-info .panel-body .p1{
+    margin-bottom: 5px;
 }
-.my-rateplan-info div div:nth-of-type(1) span:nth-of-type(1){
-
+.my-rateplan-info .panel-body .p2{
+    color: #B3B2B3;
+    font-size: 12px;
+    margin-bottom: 0;
 }
-.my-rateplan-info div div:nth-of-type(1) div:nth-of-type(1){
-    color: gray; top: -10px; position: relative; height: 8px;
+.my-rateplan-info .panel-body .divBooking{
+    position: absolute;
+    top: 10px;
+    right: 32px;
+    text-align: center;
+    overflow: hidden;
 }
-.my-rateplan-info div div:nth-of-type(2){
-    position: relative; left: 50%; top: -60px; height: 20px; color: red; font-size: 20px;
-    background-color:#F4F4F4;
-    filter:Alpha(opacity=100);
-    width: 40%;
-    *zoom:1; /* 激活IE6、7的haslayout属性，让它读懂Alpha */
+.my-rateplan-info .panel-body .divBooking .price{
+    display: block;
+    color: #E64340;
 }
-.my-rateplan-info div div:nth-of-type(3){
-    position: relative; height: 32px; width: 35px; left: 90%; top: -88px; background: red; text-align: center; line-height: 35px;
+.my-rateplan-info .panel-body .divBooking a{
+    display: block;
+    width: 62px;
+    height: 30px;
+    margin-top: 2px;
+    line-height: 30px;
+    background: #5b97f8;
+    color: #fff;
+    text-align: center;
+    border-radius: 3px;
+    float: right;
 }
-.my-rateplan-info div div:nth-of-type(3) span{
-    color: white; font-size: 30px; top: 0px;
+.data-toggle{
+    position: relative;
+    display: block;
 }
-.my-rateplan-info div div:nth-of-type(3) div:nth-of-type(1){
-    position: relative; height: 20px; width: 35px; left: 0px; top: -5px; background: white; border-width: 1px; border-color: red; border-style: solid; text-align: center; line-height: 20px;font-size: 10px;
+.data-toggle .input-group-addon{
+    border: 0;
+    background: #fff;
+    color: #9B9B9B;
+}
+.data-toggle .r-chevron{
+    font-size: 14px;
+    z-index: 10;
+    color: #ACACAC;
+    top: 7px;
+    position: absolute;
+    display: block;
+    right: 10px;
 }

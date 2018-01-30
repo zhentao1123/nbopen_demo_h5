@@ -1,56 +1,110 @@
-.my-header div div{
-    height: 50px; width: 100%;
+.btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover, .open>.dropdown-toggle.btn-default.focus, .open>.dropdown-toggle.btn-default:focus, .open>.dropdown-toggle.btn-default:hover {
+    color: #333;
+    background-color: #fff;
+    border-color: none;
+}
+.container{
+    padding: 0;
+}
+.row{
+    margin-right: 0; margin-left: 0;
+}
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9{
+    padding-right: 0; padding-left: 0;
+}
+body {
+    background: #eee !important;
+}
+.navbar {
+  min-height: 44px;
+}
+.navbar-default {
+  background-image: none; border-radius: 0; box-shadow: none; margin-bottom: 0;
 }
 .my-header div div div:nth-of-type(1) {
-    position: absolute; width: 30%; text-align: left; line-height: 50px; height: 50px; z-index: 99999;
+    position: absolute; width: 30%; text-align: left; line-height: 44px; height: 44px; z-index: 9999; left: 8px;
 }
 .my-header div div div:nth-of-type(1) span {
-    font-size: 30px; line-height: 50px;
+    font-size: 20px; line-height: 44px; color: #4A4A4A;
 }
 .my-header div div div:nth-of-type(2){
-    position: relative; text-align: center; width: 100%;
+    position: relative; text-align: center; width: 100%; margin-right: 0px;
 }
 .my-header div div div:nth-of-type(2) span{
-    line-height: 50px; font-size: 25px; color: gray;
+    line-height: 44px; font-size: 17px; color: #333;
+}
+.my-header div div{
+    height: 44px; width: 100%;
+}
+.my-header div div div:nth-of-type(3) {
+    position: absolute; width: 10%; top: 0px; right: 0px; line-height: 44px; height: 44px; z-index: 99999;
+}
+.my-header div div div:nth-of-type(3) span {
+    font-size: 20px; line-height: 44px; color: #858585;
 }
 
+.panel-default{
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    margin-bottom: 10px;
+}
+.my-bookinginfo .hotel-name{
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+.my-bookinginfo p{
+    margin-bottom: 0;
+}
+.my-bookinginfo span{
+    color: #5b97f8;
+    margin-left: 20px;
+    font-size: 12px;
+}
 .my-bookinginfo span:nth-of-type(1) {
-    font-weight:900;
-    font-size: 20px;
-}
-.my-bookinginfo span:nth-of-type(2) {
-    color: orange;
-}
-.my-bookinginfo span:nth-of-type(3) {
-    font-size: 15px;
-}
-.my-bookinginfo span:nth-of-type(4) {
-    font-size: 15px;
-}
-.my-bookinginfo span:nth-of-type(5) {
-    font-size: 15px;
-}
-.my-bookinginfo span:nth-of-type(6) {
-    color: blue;
 }
 .my-cancelrule {
-    color: gray;
-    font-size: small;
-    margin-left: 10px;
-    margin-right: 4px;
+    color: #000;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-left: 15px;
 }
 .my-select {
-    width: 100%;
+    padding: 12px 0 5px;
+    background: #fff;
+    position: relative;
+    border-bottom: 1px solid #D8D8D8;
+}
+.my-select .key{
+    line-height: 30px;
+    display: block;
 }
 .my-select button {
-    width: 100%;
-    background: white;
+    box-shadow: none;
+    border: 0;
+    border-radius: 0;
+    text-align: right;
+    position: absolute;
+    right: 0;
+    top: 12px;
+    padding: 0;
+    width: 60%;
+    height: 30px;
+    background: #fff;
+}
+.my-select .glyphicon {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #ACACAC;
 }
 .my-select ul {
-    width: 100%;
+    width: auto;
+    right: 15px;
+    left: auto;
 }
 .my-select ul li {
-    text-align: center;
+    text-align: right;
 }
 .my-input-group {
     width: 100%;
@@ -81,3 +135,58 @@
     text-align: center; background: white;
 }
 
+.item-wrap{
+    background: #fff;
+    padding: 0 15px;
+}
+.item-wrap .my-select:last-child{
+    border: 0;
+}
+
+.item-wrap .input-group-addon{
+    width: auto;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    line-height: 30px;
+    color: #333;
+}
+.item-wrap .form-control{
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    line-height: 30px;
+    height: 30px;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    text-align: right;
+    padding: 0;
+}
+.item-wrap .my-input-group{
+    padding: 12px 0 5px;
+    border-bottom: 1px solid #D8D8D8;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+}
+.btn-save{
+    margin: 15px;
+    background: #E64340;
+    border: 0;
+    padding: 0;
+    line-height: 36px;
+    height: 36px;
+    border-radius: 8px;
+    text-align: center;
+    display: block;
+    width: 90%;
+    color: #fff;
+    font-size: 14px;
+}
+#divNeedInvoiceSelect,#divHotelInvoice .my-input-group,#divInvoiceInfo .my-input-group:last-child{
+    border-bottom: 0;
+}
+#divInvoiceInfo{
+    border-top: 1px solid #D8D8D8;
+}

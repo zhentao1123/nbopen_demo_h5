@@ -1,63 +1,110 @@
-.my-header div div{
-    height: 50px; width: 100%;
+.btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover, .open>.dropdown-toggle.btn-default.focus, .open>.dropdown-toggle.btn-default:focus, .open>.dropdown-toggle.btn-default:hover {
+    color: #333;
+    background-color: #fff;
+    border-color: none;
+}
+.container{
+    padding: 0;
+}
+.row{
+    margin-right: 0; margin-left: 0;
+}
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9{
+    padding-right: 0; padding-left: 0;
+}
+body {
+    background: #eee !important;
+}
+.navbar {
+  min-height: 44px;
+}
+.navbar-default {
+  background-image: none; border-radius: 0; box-shadow: none; margin-bottom: 0;
 }
 .my-header div div div:nth-of-type(1) {
-    position: absolute; width: 30%; text-align: left; line-height: 50px; height: 50px; z-index: 9999;
+    position: absolute; width: 30%; text-align: left; line-height: 44px; height: 44px; z-index: 9999; left: 8px;
 }
-.my-header div div span:nth-of-type(1) span {
-    font-size: 30px; line-height: 50px;
+.my-header div div div:nth-of-type(1) span {
+    font-size: 20px; line-height: 44px; color: #4A4A4A;
 }
 .my-header div div div:nth-of-type(2){
-    position: relative; text-align: center; width: 100%;
+    position: relative; text-align: center; width: 100%; margin-right: 0px;
 }
-.my-header div div div span{
-    line-height: 50px; font-size: 25px; color: gray;
+.my-header div div div:nth-of-type(2) span{
+    line-height: 44px; font-size: 17px; color: #333;
+}
+.my-header div div{
+    height: 44px; width: 100%;
+}
+.my-header div div div:nth-of-type(3) {
+    position: absolute; width: 10%; top: 0px; right: 0px; line-height: 44px; height: 44px; z-index: 99999;
+}
+.my-header div div div:nth-of-type(3) span {
+    font-size: 20px; line-height: 44px; color: #858585;
 }
 
-.my-bookinginfo span:nth-of-type(1) {
-    font-weight:700;
-    color: orange;
-    font-size: 16px;
+
+.panel-default{
+    border: 0;
+    box-shadow: 0;
+    border-radius: 0;
 }
-.my-bookinginfo span:nth-of-type(2) {
-    margin-left: 20px;
-    color: gray;
-    font-size: 8px;
+.my-bookinginfo{
+    font-size: 12px;
+    position: relative;
+    padding-right: 0;
 }
-.my-bookinginfo span:nth-of-type(3) {
-    font-size: 20px;
+.my-bookinginfo p{
+    position: relative;
 }
-.my-bookinginfo span:nth-of-type(4) {
-    font-size: 15px;
+.my-bookinginfo .price{
+    position: absolute;
+    right: 15px;
+    top: -5px;
+    font-style: normal;
 }
-.my-bookinginfo span:nth-of-type(5) {
-    margin-left: 50px;
-    font-size: 15px;
+.my-bookinginfo .price em{
+    font-size: 17px;
+    font-style: normal;
+    color: #e74946;
 }
-.my-bookinginfo span:nth-of-type(6) {
-    font-size: 25px;
-    color: red;
+.my-bookinginfo .status{
+    padding-bottom: 5px;
+    border-bottom: 1px solid #D8D8D8;
 }
-.my-bookinginfo span:nth-of-type(7) {
-    font-weight: 900;
-    font-size: 15px;
+.my-bookinginfo .status .t1{
+    color: #FF4900;
 }
-.my-bookinginfo span:nth-of-type(8) {
-    color: blue;
+.my-bookinginfo .name{
+    font-size: 14px;
+    font-weight: bold;
 }
-.my-bookinginfo span:nth-of-type(9) {
-    font-weight: 900;
-    font-size: 20px;
-    color: red;
+.my-bookinginfo .num{
+    color: #629bf8;
 }
 
 .my-btn-group {
     text-align: right;
+    border-top: 1px solid #D8D8D8;
+    padding-top: 15px;
+    margin-top: 15px;
 }
-.my-btn-order {
-    width: 25%;
-    text-align: center;
+.my-btn-group button {
+    display: inline-block;
+    margin-right: 10px;
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0;
+    box-shadow: none;
+    font-size: 14px;
+    text-shadow: none;
 }
-.my-btn-order button {
-    width: 90%;
+.my-btn-group .btn-default {
+    border: 1px solid #D8D8D8;
+    background: #fff;
+}
+.my-btn-group .btn-danger {
+    border: 1px solid #fff;
+    background: #E64340;
 }

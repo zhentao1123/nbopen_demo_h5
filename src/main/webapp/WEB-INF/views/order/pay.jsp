@@ -52,6 +52,10 @@
 
     <div class="panel panel-default">
         <div id="divProductInfo" class="panel-body my-bookinginfo">
+            <p><span class="name">北京皇冠假日酒店</span><em>(经济型)</em></p>
+            <p><span>标准间</span><span>不含早</span><em>1间</em></p>
+            <p><span>12月22日（周五） - 12月23日（周六）</span><em class="blue">共1晚</em></p>
+            <p><span>订单金额：</span><em>￥349.30</em></p>
             <%--<span>北京皇冠假日酒店</span><span>(经济型)</span><br/>--%>
             <%--<hr />--%>
             <%--<span>标准间</span><br />--%>
@@ -71,9 +75,11 @@
             <span class="input-group-addon">卡号：</span>
             <input id="inputCardNumber" type="text" class="form-control" placeholder="请输入13~16位卡号" aria-describedby="basic-addon1">
         </div>
-        <div id="divCVV" class="input-group my-input-group" style="display: none">
-            <span class="input-group-addon">CVV：</span>
-            <input id="inputCVV" type="text" class="form-control" placeholder="请输入3位CVV" aria-describedby="basic-addon1">
+        <div id="divCVV" style="display: none">
+            <div class="input-group my-input-group">
+                <span class="input-group-addon">CVV：</span>
+                <input id="inputCVV" type="text" class="form-control" placeholder="请输入3位CVV" aria-describedby="basic-addon1">
+            </div>
         </div>
         <div class="input-group my-input-group">
             <span class="input-group-addon">持卡人姓名：</span>
@@ -83,20 +89,17 @@
             <span class="input-group-addon">有效期：</span>
             <input id="inputTerm" type="text" class="form-control" placeholder="月年，例：0118" aria-describedby="basic-addon1">
         </div>
-        <div id="divInvoiceTypeSelect" class="input-group my-span-select">
-            <span class="input-group-addon my-span-title">证件类型：</span>
-            <div name="divSelect" class="dropdown">
-
-                <button id="btnIdType" value="IdentityCard" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    身份证
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a value="IdentityCard">身份证 </a></li>
-                    <li><a value="Passport">护照 </a></li>
-                    <li><a value="Other">其他 </a></li>
-                </ul>
-            </div>
+        <div id="divInvoiceTypeSelect" name="divSelect" class="dropdown my-select">
+            <span class="key">证件类型：</span>
+            <button id="btnIdType" value="IdentityCard" class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                身份证
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a value="IdentityCard">身份证 </a></li>
+                <li><a value="Passport">护照 </a></li>
+                <li><a value="Other">其他 </a></li>
+            </ul>
         </div>
         <div class="input-group my-input-group">
             <span class="input-group-addon">证件号码：</span>
@@ -106,7 +109,7 @@
 </div>
 
 <div class="container" style="text-align: center">
-    <button id="btnPay" class="btn btn-danger" style="width: 60%;">支付</button>
+    <button id="btnPay" class="btn-save">支付</button>
 </div>
 <!-- 信用卡信息 -->
 

@@ -51,19 +51,18 @@ function getOrders() {
         var listHtml = "";
         $.each(result.orders, function (i, info) {
             listHtml += '<div class="panel panel-default">' +
-                '<div name="divOrder" orderid="'+info.orderId+'" class="panel-body my-bookinginfo">' +
-                '<span>'+info.showStatus+'</span><span>订单编号：'+info.orderId+'</span><br/><hr />' +
-                '<span>'+info.hotelName+'</span><br />' +
-                '<span>'+info.roomName+'（'+info.contactName+'）</span><span>'+info.paymentType+'</span><span>'+changeCurrency(info.currencyCode)+info.totalPrice+'</span><br />' +
-                '<span>'+info.dateDescription+'</span><span>'+info.numberOfDays+'晚'+info.numberOfRooms+'间</span><hr />' +
-                '<div class="my-btn-group">' ;
+                '        <div name="divOrder" orderid="'+info.orderId+'"class="panel-body my-bookinginfo">' +
+                '            <p class="status"><span class="t1">'+info.showStatus+'</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订单编号：'+info.orderId+'</span></p>' +
+                '            <p class="name"><span>'+info.hotelName+'</span></p>' +
+                '            <p><span>'+info.roomName+'</span><span class="price">'+info.paymentType+'<em>'+changeCurrency(info.currencyCode)+info.totalPrice+'</em></span></p>' +
+                '            <p><span>'+info.dateDescription+'</span><span class="num">'+info.numberOfDays+'晚'+info.numberOfRooms+'间</span></p>'+
+                '<div class="my-btn-group">';
+
             if (info.bCancel) {
-                listHtml += '<div class="btn-group my-btn-order">' +
-                    '<button name="btnCancel" orderId="'+info.orderId+'" class="btn btn-default">取消订单</button></div>';
+                listHtml += '<button name="btnCancel" orderId="'+info.orderId+'" class="btn btn-default">取消订单</button>';
             }
             if (info.bPayable) {
-                listHtml += '<div class="btn-group my-btn-order">' +
-                    '<button name="btnPay" orderId="'+info.orderId+'" payAmount="'+info.payAmount+'" class="btn btn-danger">去支付</button></div>';
+                listHtml += '<button name="btnPay" orderId="'+info.orderId+'" payAmount="'+info.payAmount+'" class="btn btn-danger">去支付</button>';
             }
 
             listHtml += '</div></div></div>';

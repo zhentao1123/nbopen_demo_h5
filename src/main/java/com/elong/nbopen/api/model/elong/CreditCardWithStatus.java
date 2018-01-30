@@ -64,7 +64,7 @@ public class CreditCardWithStatus
     protected EnumCreditCardStatus status;
     @JSONField(name = "Amount")
     protected BigDecimal amount;
-    @JSONField(name = "LatestPayTime")
+    @JSONField(name = "LatestPayTime",format="yyyy-MM-dd'T'HH:mm:ss+08:00")
     @XmlSchemaType(name = "dateTime")
     protected Date latestPayTime;
     @JSONField(name = "Notes")

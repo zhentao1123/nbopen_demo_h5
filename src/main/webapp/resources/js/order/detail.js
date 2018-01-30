@@ -80,59 +80,51 @@ function initPage() {
     var result = ajaxCommonForJson(url, "POST", req);
     if (result != null) {
         var tempHtml = "";
-        tempHtml += '<span>订单号码：</span><span>'+ result.orderId +'</span><br/><span>订单状态：</span><span>'+ result.showStatus +'</span>';
+        tempHtml += '<p><span>订单号码：</span><span>'+result.orderId+'</span></p>' +
+            '            <p><span>订单状态：</span><span class="status">'+result.showStatus+'</span>';
         if (result.bPayable) {
-            tempHtml += '<span>请在'+ result.lastPayTime +'之前完成支付，过时订单将会自动取消</span>';
+            tempHtml += '<span>&nbsp;&nbsp;&nbsp;&nbsp;请在'+ result.lastPayTime +'之前完成支付，过时订单将会自动取消</span></p>';
         } else {
-            tempHtml += '<span></span>';
+            tempHtml += '<span></span></p>';
         }
         $('#divOrderInfo').html(tempHtml);
 
         tempHtml = "";
-        tempHtml += '<span>'+result.hotelName+'</span><br/>' +
-            '<span>'+result.address+'</span>' +
-            '<hr/><span>酒店电话：</span><span>'+result.hotelPhone +'</span>';
+        tempHtml += '<p><span>'+result.hotelName+'</span></p>' +
+            '            <p><span>'+result.address+'</span></p>' +
+            '            <p class="hr"><span>酒店电话：</span><span>'+result.hotelPhone+'</span></p>';
         $('#divHotelInfo').html(tempHtml);
 
         tempHtml = "";
-        tempHtml += '<span>入离日期：</span>' +
-            '<span>'+ result.arrivalDate +'-' +result.departureDate +' </span>' +
-            '<span>共'+ result.numberOfDays+'晚</span>' +
-            '<hr/>' +
-            '<span>入住房型：</span><span>'+result.roomName+'（'+ result.numberOfRooms +'间）</span><br/>' +
-            '<span>最晚到店：</span><span>'+result.lastArrivalTime+'</span><br/>' +
-            '<span>入住人：</span><span>'+result.customerNames+'</span><br/>' +
-            '<span>联系电话：</span><span>'+result.contactPhone+'</span>' +
-            '<hr/>' +
-            '<span>早餐信息：</span><span>'+result.valueAdds+'</span>' +
-            '<hr/>' +
-            '<span>发票状态：</span><span>'+result.invoiceStatus+'</span>';
+        tempHtml += '<p><span>入离日期：</span><span>'+result.arrivalDate +'-' +result.departureDate+' </span><span>共'+result.numberOfDays+'晚</span></p>' +
+            '            <p><span>入住房型：</span><span>'+result.roomName+'（'+ result.numberOfRooms +'间）</span></p>' +
+            '            <p><span>最晚到店：</span><span>'+result.lastArrivalTime+'</span></p>' +
+            '            <p><span>入住人：</span><span>'+result.customerNames+'</span></p>' +
+            '            <p><span>联系电话：</span><span>'+result.contactPhone+'</span></p>' +
+            '            <p class="hr"><span>早餐信息：</span><span>'+result.valueAdds+'</span></p>' +
+            '            <p class="hr"><span>发票状态：</span><span>'+result.invoiceStatus+'</span>';
         if (result.invoiceUrl != null) {
-            tempHtml += '<span><a url="#">下载发票</a></span>';
+            tempHtml += '<span><a url="result.invoiceUrl">下载发票</a></span></p>';
         } else {
-            tempHtml += '<span></span>';
+            tempHtml += '<span></span></p>';
         }
         $('#divProductInfo').html(tempHtml);
 
         tempHtml = '';
-        tempHtml += '<span>预订日期：</span>' +
-            '<span>'+result.bookingDate+'</span>' +
-            '<hr/>' +
-            '<span>订单金额：</span>' +
-            '<span>'+changeCurrency(result.currencyCode)+result.totalPrice+'</span>' +
-            '<span>（'+result.paymentType+'）</span>';
+        tempHtml += '<p><span>预订日期：</span><span>'+result.bookingDate+'</span></p>' +
+            '            <p><span>订单金额：</span><span class="price">'+changeCurrency(result.currencyCode)+result.totalPrice+'</span><span>（'+result.paymentType+'）</span></p>';
         if (result.penalty != null && result.penalty != 0) {
-            tempHtml +=  '<hr/><span>罚金：</span><span>'+changeCurrency(result.currencyCode)+ result.penalty+'</span><br/>';
+            tempHtml +=  '<p class="hr"><span>罚金：</span><span>'+changeCurrency(result.currencyCode)+ result.penalty+'</span></p>';
         }
         $('#divBookingInfo').html(tempHtml);
 
         $('#inputPayAmount').val(result.payAmount);
 
         if (result.bCancel) {
-            $('#divCancelOrder').css("display", "block");
+            $('#btnCancelOrder').css("display", "inline-block");
         }
         if (result.bPayable) {
-            $('#divPayOrder').css("display", "block");
+            $('#btnPayOrder').css("display", "inline-block");
         }
     }
 }

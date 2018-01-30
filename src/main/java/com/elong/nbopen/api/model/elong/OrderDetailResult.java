@@ -118,7 +118,7 @@ public class OrderDetailResult
     @JSONField(name = "PenaltyCurrencyCode")
     @XmlSchemaType(name = "string")
     protected EnumCurrencyCode penaltyCurrencyCode;
-    @JSONField(name = "CancelTime")
+    @JSONField(name = "CancelTime",format="yyyy-MM-dd'T'HH:mm:ss+08:00")
     @XmlSchemaType(name = "dateTime")
     protected Date cancelTime;
     @JSONField(name = "HasInvoice")

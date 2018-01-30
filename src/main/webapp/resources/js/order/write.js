@@ -14,7 +14,7 @@ $(function(){
     getProductInfo();
 
     $('div[name="divSelect"]').find('ul').find('li').bind('click', function(){
-        $(this).parent().parent().find('button').html($(this).find('a').html() + '<span class="caret"></span>');
+        $(this).parent().parent().find('button').html($(this).find('a').html() + '<span class="glyphicon glyphicon-menu-right"></span>');
         $(this).parent().parent().find('button').attr('value', $(this).find('a').attr('value'));
         // 更改了房间数量
         if ($(this).parent().parent().attr('id') == 'divRoomNumSelect') {
@@ -32,12 +32,12 @@ $(function(){
         }
 
         // 更改发票类型
-        if ($(this).parent().parent().parent().attr('id') == 'divInvoiceTypeSelect') {
+        if ($(this).parent().parent().attr('id') == 'divInvoiceTypeSelect') {
             changeInvoiceType();
         }
 
         // 更改抬头类型
-        if ($(this).parent().parent().parent().attr('id') == 'divTitleTypeSelect') {
+        if ($(this).parent().parent().attr('id') == 'divTitleTypeSelect') {
             changeTitleType();
         }
     });
@@ -131,7 +131,7 @@ function createOrder() {
         "earliestArrivalTime": (nextHour.substring(0,1) == "0"? arrivalNextDate: arrivalDate) + " " + nextHour + ":00",
         "latestArrivalTime": ($('#btnArrivalTime').attr("value").substring(0,1) == "0"? arrivalNextDate: arrivalDate) + " " + $('#btnArrivalTime').attr("value"),
         "numberOfRooms": $("#btnRoomNum").attr("value"),
-        "totalPrice": parseFloat($('#inputTotalRate').val()) * parseInt($("#btnRoomNum").attr("value"))
+        "totalPrice": parseFloat($('#inputTotalRate').val())
     };
 
     var validateResult = ajaxCommonForJson(validateUrl, "POST", validateReq);
@@ -193,7 +193,7 @@ function createOrder() {
         "paymentType": $('#inputPaymentType').val(),
         "numberOfRooms": $("#btnRoomNum").attr("value"),
         "currencyCode": $('#inputTotalRate').attr("currencyCode"),
-        "totalPrice": parseFloat($('#inputTotalRate').val()) * parseInt($("#btnRoomNum").attr("value")),
+        "totalPrice": parseFloat($('#inputTotalRate').val()),
         "needInvoice": needInvoice,
         "invoice": invoice,
         "customerType": $('#inputCustomerType').val(),
@@ -221,7 +221,7 @@ function createOrder() {
 }
 
 function changeTitleType() {
-    if ($('#divTitleTypeSelect').find('div').find('button').attr("value") == 'Personally') {
+    if ($('#divTitleTypeSelect').find('button').attr("value") == 'Personally') {
         $('#divPersonNotInput').css('display', 'none');
     } else {
         $('#divPersonNotInput').css('display', 'block');
@@ -229,7 +229,7 @@ function changeTitleType() {
 }
 
 function changeInvoiceType() {
-    if ($('#divInvoiceTypeSelect').find('div').find('button').attr("value") == 'Paper') {
+    if ($('#divInvoiceTypeSelect').find('button').attr("value") == 'Paper') {
         $('#divPaperInvoiceAddr').css('display', 'block');
     } else {
         $('#divPaperInvoiceAddr').css('display', 'none');
@@ -280,17 +280,16 @@ function getProductInfo() {
     var result = ajaxCommonForJson(url, "POST", req);
     if (result != null) {
         var productHtml = "";
-        productHtml += '<span>'+ result.hotelName +'</span><span>('+result.starRate+')</span><br/><hr />'
-            +'<span>'+result.roomName+'</span><br />'
-            +'<span>'+result.ratePlanName+'</span><br />'
-            +'<span>'+result.dateDescription+'</span><span>共'+result.numberOrDays+'晚</span>';
+        productHtml += '<p class="hotel-name">'+result.hotelName+'<span>（'+result.starRate+'）</span></p>' +
+            '            <p>'+result.roomName+'<span>('+(result.paymentType=="Prepay"?"预付":"现付")+')</span></p>' +
+            '            <p>'+result.dateDescription+'<span>共'+result.numberOrDays+'晚</span></p>';
         $('#divProductInfo').html(productHtml);
 
         // 最少预订房间数量
-        var selectRoomNumHtml = '<button id="btnRoomNum" value="'+ result.minAmount +'" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">'
-            +'房间数量：'+ result.minAmount +'间 <span class="caret"></span> </button> <ul class="dropdown-menu">';
+        var selectRoomNumHtml = '<span class="key">房间数量：</span><button id="btnRoomNum" value="'+ result.minAmount +'" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">'
+            + result.minAmount +'间 <span class="glyphicon glyphicon-menu-right"></span> </button> <ul class="dropdown-menu">';
         for (i = result.minAmount; i <= 10; i++) {
-            selectRoomNumHtml += '<li><a value="'+ i +'">房间数量：'+ i +'间 </a></li>';
+            selectRoomNumHtml += '<li><a value="'+ i +'">'+ i +'间 </a></li>';
         }
         selectRoomNumHtml += '</ul>';
         $('#divRoomNumSelect').html(selectRoomNumHtml);
