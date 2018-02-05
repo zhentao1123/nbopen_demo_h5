@@ -69,13 +69,13 @@
         <!-- 这里面的结构改成下面这个样子 -->
         <div id="divHotelSimpelInfo" class="panel-body my-hotelsimpleinfo">
             <p>北京市海淀区永定路66号<span class="em">五棵松桥西第一个十字路口向北100米</span></p>
-            <p>
+            <p style="z-index: 99999999">
                 <span class="tel"><i class="glyphicon glyphicon-earphone"></i>0820-8776682</span>
-                <span class="more" id="aMoreHotelInfo">更多信息<i class="glyphicon glyphicon-chevron-right"></i></span>
+                <span class="more" id="aMoreHotelInfo" style="z-index: 99999">更多信息<i class="glyphicon glyphicon-chevron-right"></i></span>
             </p>
         </div>
         <!-- 地图移到这里来了 -->
-        <div id="allmap" class="allmap"><img src="/resources/img/map-bg.png"></div>
+        <div id="allmap" class="allmap" style="height:45px;z-index: 100"><img src="/resources/img/map-bg.png"></div>
     </div>
 
 
@@ -97,7 +97,7 @@
             <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                 <input id="dateSelect" readonly="readonly" class="form-control" style="text-align: center; display: inline-block; background: #fff; cursor: pointer; padding: 5px; border: 0; box-shadow:none; width: 100%; text-align: left;">
-                <span class="r-chevron"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                <span class="r-chevron"></span>
                 <input style="display: none" name="daterangepicker_start" value="${initArrivalDate}" />
                 <input style="display: none" name="daterangepicker_end" value="${initDepartureDate}"/>
             </div>

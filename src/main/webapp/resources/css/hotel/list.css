@@ -28,6 +28,9 @@ body {
 }
 .my-hotellist span {
 	display: block; margin-left: 80px;	font-size: 12px; line-height: 18px;	color: #999;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
 }
 .my-hotellist span:nth-child(2) {
 	font-size: 15px; line-height: 16px;	height: 16px;	color: #353535;

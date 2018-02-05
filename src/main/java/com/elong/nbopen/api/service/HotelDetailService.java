@@ -373,16 +373,19 @@ public class HotelDetailService {
                 result.setMinAmount(ratePlan.getMinAmount());
                 result.setPaymentType(ratePlan.getPaymentType().name());
                 result.setCustomerType(ratePlan.getCustomerType().name());
+                result.setNightlyRates(ratePlan.getNightlyRates());
 
                 /************* 取消规则处理 *******************/
                 if (ratePlan.getPaymentType().name().equals("Prepay")) {
                     if (hotel.getPrepayRules() != null && hotel.getPrepayRules().size() > 0) {
                         result.setCancelRule(hotel.getPrepayRules().get(0).getDescription().substring(hotel.getPrepayRules().get(0).getDescription().indexOf("：")+1));
                     }
+                    result.setPrepayRules(hotel.getPrepayRules());
                 } else {
                     if (hotel.getGuaranteeRules() != null && hotel.getGuaranteeRules().size() > 0) {
                         result.setCancelRule(hotel.getGuaranteeRules().get(0).getDescription().substring(hotel.getGuaranteeRules().get(0).getDescription().indexOf("：")+1));
                     }
+                    result.setGuaranteeRules(hotel.getGuaranteeRules());
                 }
                 /************* 取消规则处理 *******************/
             } else {

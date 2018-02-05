@@ -4,6 +4,13 @@ var departureDateMark = moment().add('days', 1).format('YYYY-MM-DD');
 var cityCodeMark = "";
 var cityNameMark = "";
 $(function() {
+    // window.onbeforeunload = function() {
+    //     var keys=document.cookie.match(/[^ =;]+(?=\=)/g);
+    //     if (keys) {
+    //         for (var i = keys.length; i--;)
+    //             document.cookie=keys[i]+'=0;expires=' + new Date(0).toUTCString()
+    //     }
+    // }
 
     $('#spanOrder').click(function() {
         if ($('#inputUser').val() == null || $('#inputUser').val() == "" || $('#inputUser').val() == "null") {
@@ -63,14 +70,17 @@ $(function() {
         searchHotelList();
     });
 
-    if (getCookie("arrivalDate") != "" && getCookie("departureDate") != "") {
-        $("[name='daterangepicker_start']").val(getCookie("arrivalDate"));
-        $("[name='daterangepicker_end']").val(getCookie("departureDate"));
-        $('#dateSelect').val($("[name='daterangepicker_start']").val() + ' 到 ' + $("[name='daterangepicker_end']").val());
+    if (getCookie("arrivalDate") != "" && getCookie("departureDate") != ""
+            && moment(getCookie("arrivalDate"), "YYYY-MM-DD").valueOf() >= moment.valueOf()) {
+            $("[name='daterangepicker_start']").val(getCookie("arrivalDate"));
+            $("[name='daterangepicker_end']").val(getCookie("departureDate"));
+            $('#dateSelect').val($("[name='daterangepicker_start']").val() + ' 到 ' + $("[name='daterangepicker_end']").val());
     } else {
         $("[name='daterangepicker_start']").val(moment().format('YYYY-MM-DD'));
         $("[name='daterangepicker_end']").val(moment().add('days', 1).format('YYYY-MM-DD'));
     }
+    document.cookie = 'arrivalDate=' + $("[name='daterangepicker_start']").val();
+    document.cookie = 'departureDate=' + $("[name='daterangepicker_end']").val();
 
     var cityCodeMark = getCookie("cityCode");
     var cityNameMark = getCookie("cityName");
@@ -225,7 +235,7 @@ function searchHotelList() {
     var queryText = $('#inputHotelOrLocation').val();
     var starRate = "";
 
-    if (arrivalDate != arrivalDateMark || departureDate != departureDateMark) {
+    if (arrivalDate != getCookie("arrivalDate") || departureDate != getCookie("departureDate")) {
         pageIndex = 1;
     }
 

@@ -10,8 +10,9 @@ package com.elong.nbopen.api.model.elong;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement; 
-import java.util.List; 
+import javax.xml.bind.annotation.XmlElement;
+import java.math.BigDecimal;
+import java.util.List;
 import com.alibaba.fastjson.annotation.JSONField;
 import javax.xml.bind.annotation.XmlType;
 
@@ -51,6 +52,8 @@ public class CancelOrderCondition {
     protected String cancelCode;
     @JSONField(name = "Reason")
     protected String reason;
+    @JSONField(name = "PenaltyAmount")
+    protected BigDecimal penaltyAmount = new BigDecimal(0);
 
     /**
      * Gets the value of the orderId property.
@@ -116,4 +119,11 @@ public class CancelOrderCondition {
         this.reason = value;
     }
 
+    public BigDecimal getPenaltyAmount() {
+        return penaltyAmount;
+    }
+
+    public void setPenaltyAmount(BigDecimal penaltyAmount) {
+        this.penaltyAmount = penaltyAmount;
+    }
 }

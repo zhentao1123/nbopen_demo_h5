@@ -2,6 +2,7 @@
  * Created by user on 2017/12/11.
  */
 var pageIndex = 1;
+var penaltyAmount = -1;
 
 $(function () {
 
@@ -98,11 +99,26 @@ function getOrders() {
             }
             var url = "/api/order/cancelOrder";
             var req = {
-                "orderId": parseInt($(this).attr("orderId"))
+                "orderId": parseInt($(this).attr("orderId")),
+                "penaltyAmount": penaltyAmount
             };
             var result = ajaxCommonForJson(url, "POST", req);
             if (result != null && result.success) {
                 alert("取消成功");
+            } else if (result.penaltyAmount != null) {
+                if (confirm("取消订单将收取" + result.penaltyAmount + "元作为罚金，确认取消吗？")) {
+                    var confirmUrl = "/api/order/cancelOrder";
+                    var confirmReq = {
+                        "orderId": parseInt($(this).attr("orderId")),
+                        "penaltyAmount": result.penaltyAmount
+                    };
+                    var confirmResult = ajaxCommonForJson(url, "POST", req);
+                    if (confirmResult != null && confirmResult.success) {
+                        alert("取消成功");
+                    } else {
+                        alert(result.reason);
+                    }
+                }
             } else {
                 alert(result.reason);
             }
@@ -116,7 +132,7 @@ function getOrders() {
             if (parseFloat($(this).attr("payAmount")) == 0) {
                 alert("此订单不需要支付");
             } else {
-                var cashDeskRequestUrl = "/api/order/getCashDesk";
+                var cashDeskRequestUrl = "/api/order/getCashDesk?user=" + $('#inputUser').val();
                 var cashDeskRequest = {
                     "orderId": $(this).attr("orderId"),
                     "amount": $(this).attr("payAmount")

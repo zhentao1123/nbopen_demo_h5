@@ -10,8 +10,9 @@ package com.elong.nbopen.api.model.elong;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement; 
-import java.util.List; 
+import javax.xml.bind.annotation.XmlElement;
+import java.math.BigDecimal;
+import java.util.List;
 import com.alibaba.fastjson.annotation.JSONField;
 import javax.xml.bind.annotation.XmlType;
 
@@ -43,6 +44,8 @@ public class CancelOrderResult {
 
     @JSONField(name = "Successs")
     protected boolean successs;
+    @JSONField(name = "PenaltyAmount")
+    protected BigDecimal PenaltyAmount;
 
     /**
      * Gets the value of the successs property.
@@ -60,4 +63,11 @@ public class CancelOrderResult {
         this.successs = value;
     }
 
+    public BigDecimal getPenaltyAmount() {
+        return PenaltyAmount;
+    }
+
+    public void setPenaltyAmount(BigDecimal penaltyAmount) {
+        PenaltyAmount = penaltyAmount;
+    }
 }

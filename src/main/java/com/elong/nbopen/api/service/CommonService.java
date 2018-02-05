@@ -40,6 +40,8 @@ public class CommonService {
      */
     public static String LOGIN_PAGE = "/test/login";
 
+    public static String ORDER_DOMAIN = "";
+
     /**
      * 订单增量更新间隔
      */
@@ -67,6 +69,11 @@ public class CommonService {
         String confirmationType = CommonsUtil.CONFIG_PROVIDAR.get("confirmation_type").toString();
         if (StringUtils.isNotBlank(confirmationType)) {
             CONFIRMATION_TYPE = confirmationType;
+        }
+
+        String orderDomain = CommonsUtil.CONFIG_PROVIDAR.get("order_domain").toString();
+        if (StringUtils.isNotBlank(orderDomain)) {
+            ORDER_DOMAIN = orderDomain;
         }
 
         try {

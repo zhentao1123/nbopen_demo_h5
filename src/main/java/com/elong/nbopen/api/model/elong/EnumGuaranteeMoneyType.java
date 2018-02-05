@@ -35,7 +35,9 @@ public enum EnumGuaranteeMoneyType {
     @XmlEnumValue("FirstNightCost")
     FirstNightCost("FirstNightCost"),
     @XmlEnumValue("FullNightCost")
-    FullNightCost("FullNightCost");
+    FullNightCost("FullNightCost"),
+    @XmlEnumValue("SingleNightCost")
+    SingleNightCost("SingleNightCost");
     private final String value;
 
     EnumGuaranteeMoneyType(String v) {

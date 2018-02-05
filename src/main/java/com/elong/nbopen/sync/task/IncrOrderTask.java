@@ -2,10 +2,7 @@ package com.elong.nbopen.sync.task;
 
 import com.elong.nbopen.api.dao.db.IOrderDao;
 import com.elong.nbopen.api.model.dao.db.OrderDo;
-import com.elong.nbopen.api.model.elong.IncrCondition;
-import com.elong.nbopen.api.model.elong.Order;
-import com.elong.nbopen.api.model.elong.OrderDetailResult;
-import com.elong.nbopen.api.model.elong.OrderIdCondition;
+import com.elong.nbopen.api.model.elong.*;
 import com.elong.nbopen.api.model.repository.OrderIncrResult;
 import com.elong.nbopen.api.model.repository.OrderInfoResult;
 import com.elong.nbopen.api.repository.HotelIncrOrderApi;
@@ -141,7 +138,7 @@ public class IncrOrderTask extends Thread implements InitializingBean {
                             orderDo.setCancelTime(orderDetail.getCancelTime());
                             orderDo.setCurrencyCode(orderDetail.getCurrencyCode().name());
                             orderDo.setBookingTime(new Date());
-                            if (orderDetail.getPaymentType().equals("SelfPay")) {
+                            if (orderDetail.getPaymentType().equals(EnumPaymentType.SelfPay)) {
                                 orderDo.setPaymentType(0);
                             } else {
                                 orderDo.setPaymentType(1);

@@ -40,6 +40,9 @@ public class CashDeskService {
         CashDestRequest condition = new CashDestRequest();
         condition.setOrderId(request.getOrderId());
         condition.setAmount(request.getAmount());
+        condition.setSuccessUrl(request.getSuccessUrl());
+        condition.setCancelUrl(request.getCancelUrl());
+        condition.setErrorUrl(request.getErrorUrl());
         CashDeskResponse result = new CashDeskResponse();
         CashDeskResult cashDeskResult = null;
         try {

@@ -20,6 +20,12 @@ public class CashDestRequest {
 
     private BigDecimal amount;
 
+    private String successUrl;
+
+    private String errorUrl;
+
+    private String cancelUrl;
+
     public long getOrderId() {
         return orderId;
     }
@@ -36,4 +42,27 @@ public class CashDestRequest {
         this.amount = amount;
     }
 
+    public String getSuccessUrl() {
+        return successUrl;
+    }
+
+    public void setSuccessUrl(String successUrl) {
+        this.successUrl = successUrl;
+    }
+
+    public String getErrorUrl() {
+        return errorUrl;
+    }
+
+    public void setErrorUrl(String errorUrl) {
+        this.errorUrl = errorUrl;
+    }
+
+    public String getCancelUrl() {
+        return cancelUrl;
+    }
+
+    public void setCancelUrl(String cancelUrl) {
+        this.cancelUrl = cancelUrl;
+    }
 }

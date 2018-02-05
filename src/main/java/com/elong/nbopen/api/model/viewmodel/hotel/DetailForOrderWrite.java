@@ -1,6 +1,11 @@
 package com.elong.nbopen.api.model.viewmodel.hotel;
 
+import com.elong.nbopen.api.model.elong.GuaranteeRule;
+import com.elong.nbopen.api.model.elong.NightlyRate;
+import com.elong.nbopen.api.model.elong.PrepayRule;
+
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by user on 2017/12/21.
@@ -71,6 +76,21 @@ public class DetailForOrderWrite {
      * 取消规则描述
      */
     private String cancelRule;
+
+    /**
+     * 担保规则列表
+     */
+    private List<GuaranteeRule> guaranteeRules;
+
+    /**
+     * 预付规则列表
+     */
+    private List<PrepayRule> prepayRules;
+
+    /**
+     * 每日价格
+     */
+    protected List<NightlyRate> nightlyRates;
 
     public String getHotelName() {
         return hotelName;
@@ -174,5 +194,29 @@ public class DetailForOrderWrite {
 
     public void setCustomerType(String customerType) {
         this.customerType = customerType;
+    }
+
+    public List<GuaranteeRule> getGuaranteeRules() {
+        return guaranteeRules;
+    }
+
+    public void setGuaranteeRules(List<GuaranteeRule> guaranteeRules) {
+        this.guaranteeRules = guaranteeRules;
+    }
+
+    public List<PrepayRule> getPrepayRules() {
+        return prepayRules;
+    }
+
+    public void setPrepayRules(List<PrepayRule> prepayRules) {
+        this.prepayRules = prepayRules;
+    }
+
+    public List<NightlyRate> getNightlyRates() {
+        return nightlyRates;
+    }
+
+    public void setNightlyRates(List<NightlyRate> nightlyRates) {
+        this.nightlyRates = nightlyRates;
     }
 }

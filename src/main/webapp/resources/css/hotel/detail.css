@@ -229,6 +229,10 @@ body {
 }
 .my-rateplan-info .panel-body .p1{
     margin-bottom: 5px;
+    margin-right: 80px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
 }
 .my-rateplan-info .panel-body .p2{
     color: #B3B2B3;

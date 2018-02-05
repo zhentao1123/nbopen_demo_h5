@@ -1,6 +1,11 @@
 /**
  * Created by user on 2017/12/8.
  */
+
+var guaranteeRules = [];
+var nightlyRates = [];
+var prepayRules = [];
+var Payment_Type = "";
 $(function(){
 
     $('#spanBack').click(function() {
@@ -285,8 +290,13 @@ function getProductInfo() {
             '            <p>'+result.dateDescription+'<span>共'+result.numberOrDays+'晚</span></p>';
         $('#divProductInfo').html(productHtml);
 
+        guaranteeRules = result.guaranteeRules;
+        nightlyRates = result.nightlyRates;
+        prepayRules = result.prepayRules;
+        Payment_Type = result.paymentType;
+
         // 最少预订房间数量
-        var selectRoomNumHtml = '<span class="key">房间数量：</span><button id="btnRoomNum" value="'+ result.minAmount +'" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">'
+        var selectRoomNumHtml = '<span class="key">房间数量：</span><button id="btnRoomNum" value="'+ result.minAmount +'" class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">'
             + result.minAmount +'间 <span class="glyphicon glyphicon-menu-right"></span> </button> <ul class="dropdown-menu">';
         for (i = result.minAmount; i <= 10; i++) {
             selectRoomNumHtml += '<li><a value="'+ i +'">'+ i +'间 </a></li>';
@@ -304,11 +314,11 @@ function getProductInfo() {
         }
 
         // 取消规则描述
-        if (result.cancelRule == null || result.cancelRule == "") {
-            $('#divCancelRule').html('取消规则：您可以在入住前随时取消');
-        } else {
-            $('#divCancelRule').html('取消规则：' + result.cancelRule);
-        }
+        // if (result.cancelRule == null || result.cancelRule == "") {
+        //     $('#divCancelRule').html('取消规则：您可以在入住前随时取消');
+        // } else {
+        //     $('#divCancelRule').html('取消规则：' + result.cancelRule);
+        // }
 
         $('#inputPaymentType').val(result.paymentType);
         $('#inputTotalRate').val(result.totalRate);
@@ -318,8 +328,21 @@ function getProductInfo() {
     }
 }
 
-function changeArrivalTime() {
+function changeCancelRule() {
+    var lastArrivalTime = moment($("#inputArrivalDate").val() + " " + $('#btnArrivalTime').attr('value'), "YYYY-MM-DD HH:mm").valueOf();
+    var roomNum = parseInt($('#btnRoomNum').attr('value'));
+    if (Payment_Type == "SelfPay") {
+        var guarantee = getGuaranteeDescription(guaranteeRules, nightlyRates, lastArrivalTime, roomNum, moment($("#inputArrivalDate").val(), "YYYY-MM-DD").valueOf(), moment($("#inputDepartureDate").val(), "YYYY-MM-DD").valueOf());
+        $('#divCancelRule').html(guarantee.description);
+    } else if (Payment_Type == "Prepay") {
+        var prepay = getPrepayDescription(prepayRules, nightlyRates, lastArrivalTime, roomNum, moment($("#inputArrivalDate").val(), "YYYY-MM-DD").valueOf(), moment($("#inputDepartureDate").val(), "YYYY-MM-DD").valueOf());
+        $('#divCancelRule').html(prepay.description);
+    }
 
+}
+
+function changeArrivalTime() {
+    changeCancelRule();
 }
 
 function changeRoomNum() {
@@ -334,4 +357,5 @@ function changeRoomNum() {
     }
     $('#divCustomerName').html('');
     $('#divCustomerName').append(customHtmls);
+    changeCancelRule();
 }

@@ -6,6 +6,8 @@ import com.elong.nbopen.api.model.viewmodel.order.GetCashDeskRequest;
 import com.elong.nbopen.api.model.viewmodel.order.PayRequest;
 import com.elong.nbopen.api.model.viewmodel.order.PayResult;
 import com.elong.nbopen.api.service.CashDeskService;
+import com.elong.nbopen.api.service.CommonService;
+import com.elong.nbopen.api.util.CommonsUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +52,11 @@ public class CashDeskController {
             result.setErrorMessage(errorMsg);
             return result;
         }
+
+        String cancelUrl = CommonService.ORDER_DOMAIN + "?user=" + request.getParameter("user") + "&orderId=" + requestbody.getOrderId();
+        requestbody.setSuccessUrl(cancelUrl);
+        requestbody.setCancelUrl(cancelUrl);
+        requestbody.setErrorUrl(cancelUrl);
 
         result = cashDeskService.getCashDesk(requestbody);
         return result;

@@ -80,8 +80,8 @@ public class OrderListService {
                     // 可以支付的情况下也可以取消
                     if (orderDo.getNeedPay()) {
                         simpleOrderResult.setbCancel(true);
-                    } else if (orderDo.getStatus().equals("D")) {
-                        // 取消成功的情况下不可取消
+                    } else if (orderDo.getStatus().equals("D") || orderDo.getStatus().equals("E")) {
+                        // 取消成功或者取消中时不可取消
                         simpleOrderResult.setbCancel(false);
                     } else {
                         simpleOrderResult.setbCancel(orderDo.getCancelTime().getTime() > new Date().getTime());

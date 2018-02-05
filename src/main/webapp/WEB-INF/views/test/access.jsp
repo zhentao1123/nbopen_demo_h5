@@ -58,10 +58,10 @@
             </div>
         </div>
         <div class="login_fields__submit" style="top: 50px; left: -10px;">
-            <input id="btnLogin" type="button" method="login" value="登录">
+            <button id="btnLogin" type="button" method="login" value="登录">
         </div>
         <div class="login_fields__submit" style="position: absolute; top: 176px; left: 170px;">
-            <input id="btnRegister" type="button" method="register" value="注册">
+            <button id="btnRegister" type="button" method="register" value="注册">
         </div>
     </div>
     <div class="success">

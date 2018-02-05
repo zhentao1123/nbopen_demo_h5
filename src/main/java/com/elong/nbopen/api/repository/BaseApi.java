@@ -125,7 +125,6 @@ public abstract class BaseApi<T,T2> {
         //发送请求
         responseData = Http.Send("GET", url, "");
         responseData = responseData.trim();
-        responseData = responseData.replaceAll("0001-01-01T00:00:00", "2001-01-01T00:00:00");
 
         if(format.equals("xml")) {
             result = XmlUtil.xmlToObject(responseData, T2Class);
@@ -141,6 +140,7 @@ public abstract class BaseApi<T,T2> {
     public void setResponseData(String responseData) {
         this.responseData = responseData;
     }
+
     public String getFormat() {
         return format;
     }

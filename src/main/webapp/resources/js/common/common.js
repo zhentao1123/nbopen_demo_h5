@@ -230,4 +230,307 @@ function getCookie(c_name){
         }
     }
     return "";
-}　　
+}
+
+/**
+ * 获取最终使用的担保
+ *
+ * @param guaranteeRules
+ * @param lastArrivalTime
+ * @param roomNum
+ * @param arrivalDate
+ * @param departureDate
+ */
+function getGuaranteeDescription(guaranteeRules, nightlyRates, lastArrivalTime, roomNum, arrivalDate, departureDate) {
+	// 担保金额
+	var amount = 0.0;
+	// 描述
+	var description = "";
+	// 最晚取消时间
+	var lastCancelTime = -1;
+	var fullAmount = 0.0;
+
+	if (guaranteeRules == null || guaranteeRules.length < 1 || nightlyRates == null || nightlyRates.length < 1) {
+		var result = {
+            "amount": 0.0,
+            "cancelTime": -1,
+            "description": "在入住前可以随时取消。"
+		};
+		return result;
+    }
+
+	var numOfDay = (departureDate-arrivalDate)/(3600*1000*24);
+    for (var i = 0; i < numOfDay; i++) {
+        var thisDay = arrivalDate + (3600*1000*24*i);
+        for (var j = 0; j < guaranteeRules.length; j ++) {
+            var guaranteeRule = guaranteeRules[j];
+            if (thisDay >= guaranteeRule.startDate && thisDay <= guaranteeRule.endDate) {
+                // 入住日担保是第一天并且当前不是第一天则可以直接跳过
+                if ( guaranteeRule.dateType == "CheckInDay" && i != 0) {
+                	break;
+                }
+                // 星期不符合直接跳过
+                var week = moment(thisDay).day();
+                if (guaranteeRule.weekSet.indexOf(week) < 0) {
+                	break;
+				}
+				var isGuarantee = false;
+				if (guaranteeRule.isTimeGuarantee == false && guaranteeRule.isAmountGuarantee == false) {
+                    isGuarantee = true;
+				} else {
+                    if (guaranteeRule.isTimeGuarantee == true) {
+                        var startTimeString = moment(arrivalDate).format("YYYY-MM-DD") + " " + guaranteeRule.startTime;
+                        var startTime = moment(startTimeString, "YYYY-MM-DD H:mm").valueOf();
+                        var endTimeString = moment(arrivalDate).format("YYYY-MM-DD") + " " + guaranteeRule.endTime;
+                        var endTime = moment(endTimeString, "YYYY-MM-DD H:mm").valueOf();
+                        if (guaranteeRule.isTomorrow) {
+                            endTime = moment(endTime).add(1, "days").valueOf();
+						}
+						if (lastArrivalTime >= startTime && lastArrivalTime <= endTime) {
+                            isGuarantee = true;
+						}
+                    }
+                    if (guaranteeRule.isAmountGuarantee == true && roomNum >= guaranteeRule.amount) {
+                        isGuarantee = true;
+                    }
+				}
+				// 判断后不需要担保则跳出
+				if (isGuarantee == false) {
+					break;
+				}
+
+				// 最晚取消时间逻辑
+				if (lastCancelTime != 0) {
+                    if (guaranteeRule.changeRule == "NoChange") {
+                        lastCancelTime = 0;
+                    } else if (guaranteeRule.changeRule == "NeedSomeDay") {
+                    	var cancelTimeString = moment(guaranteeRule.day).format("YYYY-MM-DD") + " " + guaranteeRule.time;
+                    	var cancelTime = moment(cancelTimeString, "YYYY-MM-DD HH:mm").valueOf();
+                    	if (cancelTime > lastCancelTime) {
+                            lastCancelTime = cancelTime;
+						}
+                    } else if (guaranteeRule.changeRule == "NeedCheckinTime") {
+                    	var cancelTime = moment(lastArrivalTime).add(-guaranteeRule.hour, "hours").valueOf();
+                        if (cancelTime > lastCancelTime) {
+                            lastCancelTime = cancelTime;
+                        }
+                    } else if (guaranteeRule.changeRule == "NeedCheckin24hour") {
+                        var cancelTime = moment(arrivalDate).add(24-guaranteeRule.hour, "hours").valueOf();
+                        if (cancelTime > lastCancelTime) {
+                            lastCancelTime = cancelTime;
+                        }
+                    }
+				}
+
+				// 担保金额逻辑
+				if (guaranteeRule.guaranteeType == "FirstNightCost") {
+                    amount += nightlyRates[0].member;
+				} else if (guaranteeRule.guaranteeType == "FullNightCost") {
+					for (var k = 0; k < nightlyRates.length; k++) {
+                        fullAmount += nightlyRates[k].member;
+					}
+				} else if (guaranteeRule.guaranteeType == "SingleNightCost") {
+                    amount += nightlyRates[i].member;
+				}
+			}
+		}
+
+		if (fullAmount > 0) {
+            amount = fullAmount;
+		}
+
+		if (amount > 0) {
+            description = "您需要支付" + amount + "元进行担保,";
+		}
+		if (lastCancelTime == -1) {
+            description += "在入住前可以随时取消。"
+		} else if (lastCancelTime == 0) {
+            description += "一经预订不可取消。";
+		} else {
+            description += "在"+ moment(cancelTime).format("YYYY年MM月DD日HH时mm分") + "前免费取消，之后取消将扣除所有担保金额。";
+		}
+
+		var result = {
+        	"amount": amount,
+			"cancelTime": cancelTime,
+			"description": description
+		};
+        return result;
+	}
+}
+
+/**
+ * 获取最终使用的预付规则
+ * @param prepayRules
+ * @param nightlyRates
+ * @param lastArrivalTime
+ * @param roomNum
+ * @param arrivalDate
+ * @param departureDate
+ */
+function getPrepayDescription(prepayRules, nightlyRates, lastArrivalTime, roomNum, arrivalDate, departureDate) {
+
+	var daytime1 = -1;
+	var daytime2 = -1;
+	var amount1 = 0.0;
+	var amount2 = 0.0;
+	// 0是金额，1是百分比
+	var amountType1 = 0;
+    var amountType2 = 0;
+	var description = "";
+
+	if (prepayRules == null || prepayRules.length < 1 || nightlyRates == null || nightlyRates.length < 1) {
+		var result = {
+			"daytime1": moment(arrivalDate).add(1, "hours").valueOf(),
+			"daytime2": moment(arrivalDate).add(1, "hours").valueOf(),
+			"amount1": amount1,
+			"amount2": amount2,
+			"amountType1": amountType1,
+			"amountType2": amountType2,
+			"description": "入住前可以随时取消。"
+		};
+	}
+
+    var numOfDay = (departureDate-arrivalDate)/(3600*1000*24);
+	var totalPrice = 0.0;
+	for (var i = 0; i< nightlyRates.length; i++) {
+		totalPrice += nightlyRates[i].member;
+	}
+    for (var i = 0; i < numOfDay; i++) {
+        var thisDay = arrivalDate + (3600 * 1000 * 24 * i);
+        for (var j = 0; j < prepayRules.length; j++) {
+            var prepayRule = prepayRules[j];
+            if (thisDay >= prepayRule.startDate && thisDay <= prepayRule.endDate) {
+                // 入住日类型是第一天并且当前不是第一天则可以直接跳过
+                if ( prepayRule.dateType == "CheckInDay" && i != 0) {
+                    break;
+                }
+                // 星期不符合直接跳过
+                var week = moment(thisDay).day();
+                if (prepayRule.weekSet.indexOf(week) < 0) {
+                    break;
+                }
+                if (daytime1 != 0 && daytime2 != 0) {
+                    if (prepayRule.changeRule == "PrepayNoChange") {
+                        daytime1 = 0;
+                        daytime2 = 0;
+                    } else if (prepayRule.changeRule == "PrepayNeedSomeDay") {
+                        daytime1 = moment(arrivalDate).add(1, "days").add(-prepayRule.hour, "hours").valueOf();
+                        daytime2 = moment(arrivalDate).add(1, "days").add(-prepayRule.hour2, "hours").valueOf();
+                        if (prepayRule.deductFeesBefore == 1) {
+                        	if (prepayRule.cashScaleFirstBefore == "FristNight") {
+                        		if (amount1 == 0) {
+                                    amountType1 = 0;
+                                    amount1 = nightlyRates[0].member;
+								} else {
+                        			if (amountType1 == 1 && totalPrice * amount1 * 0.01 < nightlyRates[0].member) {
+                                        amountType1 = 0;
+                                        amount1 = nightlyRates[0].member;
+									} else if (amountType1 == 0 && amount1 < nightlyRates[0].member) {
+                                        amountType1 = 0;
+                                        amount1 = nightlyRates[0].member;
+									}
+								}
+							} else if (prepayRule.cashScaleFirstBefore == "Percent") {
+                        		if (amount1 == 0) {
+                                    amountType1 = 1;
+                                    amount1 = prepayRule.deductNumBefore;
+								} else {
+                        			if (amountType1 == 1 && amount1  < prepayRule.deductNumBefore) {
+                                        amount1 = prepayRule.deductNumBefore;
+									} else if (amountType1 == 0 && amount1 < prepayRule.deductNumBefore * 0.01 * totalPrice) {
+                                        amountType1 = 1;
+                                        amount1 = prepayRule.deductNumBefore;
+									}
+								}
+							} else if (prepayRule.cashScaleFirstBefore == "Money") {
+                                if (amount1 == 0) {
+                                    amountType1 = 0;
+                                    amount1 = prepayRule.deductNumBefore;
+                                } else {
+                                    if (amountType1 == 1 && amount1 * 0.01 * totalPrice  < prepayRule.deductNumBefore) {
+                                        amountType1 = 0;
+                                        amount1 = prepayRule.deductNumBefore;
+                                    } else if (amountType1 == 0 && amount1 < prepayRule.deductNumBefore) {
+                                        amount1 = prepayRule.deductNumBefore;
+                                    }
+                                }
+							}
+						}
+                        if (prepayRule.deductFeesAfter == 1) {
+                            if (prepayRule.cashScaleFirstAfter == "FristNight") {
+                                if (amount2 == 0) {
+                                    amountType2 = 0;
+                                    amount2 = nightlyRates[0].member;
+                                } else {
+                                    if (amountType2 == 1 && totalPrice * amount2 * 0.01 < nightlyRates[0].member) {
+                                        amountType2 = 0;
+                                        amount2 = nightlyRates[0].member;
+                                    } else if (amountType2 == 0 && amount2 < nightlyRates[0].member) {
+                                        amountType2 = 0;
+                                        amount2 = nightlyRates[0].member;
+                                    }
+                                }
+                            } else if (prepayRule.cashScaleFirstAfter == "Percent") {
+                                if (amount2 == 0) {
+                                    amountType2 = 1;
+                                    amount2 = prepayRule.deductNumAfter;
+                                } else {
+                                    if (amountType2 == 1 && amount2 < prepayRule.deductNumAfter) {
+                                        amount2 = prepayRule.deductNumBefore;
+                                    } else if (amountType2 == 0 && amount2 < prepayRule.deductNumAfter * 0.01 * totalPrice) {
+                                        amountType2 = 1;
+                                        amount2 = prepayRule.deductNumBefore;
+                                    }
+                                }
+                            } else if (prepayRule.cashScaleFirstAfter == "Money") {
+                                if (amount2 == 0) {
+                                    amountType2 = 0;
+                                    amount2 = prepayRule.deductNumAfter;
+                                } else {
+                                    if (amountType2 == 1 && amount2 * 0.01 * totalPrice  < prepayRule.deductNumAfter) {
+                                        amountType2 = 0;
+                                        amount2 = prepayRule.deductNumAfter;
+                                    } else if (amountType2 == 0 && amount2 < prepayRule.deductNumBefore) {
+                                        amount2 = prepayRule.deductNumAfter;
+                                    }
+                                }
+                            }
+                        }
+					} else if (prepayRule.changeRule == "PrepayNeedOneTime") {
+                        daytime1 = moment(moment(prepayRule.dateNum).format("YYYY-MM-DD") + " " + prepayRule.time, "YYYY-MM-DD HH:mm").valueOf();
+                        daytime2 = moment(arrivalDate).add(1, "days").valueOf();
+					}
+				}
+            }
+        }
+
+        if (amount1 == 0 && amount2 == 0) {
+            description += "在" + moment(daytime2).format("YYYY年MM月DD日HH时") + "前可以免费取消，";
+		} else if (amount1 == 0 && amount2 != 0) {
+            description += "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + "前可以免费取消，";
+            description += "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + moment(daytime2).format("YYYY年MM月DD日HH时") + "之间取消将扣除" + (amountType2 == 0? amount2*roomNum +"元": "房费的"+amount2+"%") + "作为罚金，";
+            description += "之后不可取消。";
+        } else if (amount1 != 0 && amount2 == 0) {
+            description += "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + "前取消将扣除" + (amountType1 == 0? amount1*roomNum +"元": "房费的"+amount1 + "%") + "作为罚金，";
+            description += "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + moment(daytime2).format("YYYY年MM月DD日HH时") + "之间可以免费取消，";
+            description += "之后不可取消。";
+		} else if(amount1 != 0 && amount2 != 0) {
+            description = "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + "前取消将扣除" + (amountType1 == 0? amount1*roomNum +"元": "房费的"+amount1 + "%") + "作为罚金，";
+            description += "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + moment(daytime2).format("YYYY年MM月DD日HH时") + "之间取消将扣除"+ (amountType2 == 0? amount2*roomNum +"元": "房费的"+amount2+"%") + "作为罚金，";
+            description += "之后不可取消。";
+		}
+
+		var result = {
+            "daytime1": daytime1,
+            "daytime2": daytime2,
+            "amount1": amount1,
+            "amount2": amount2,
+            "amountType1": amountType1,
+            "amountType2": amountType2,
+            "description": description
+		};
+        return result;
+    }
+
+}

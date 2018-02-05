@@ -1,6 +1,8 @@
 /**
  * Created by user on 2017/12/12.
  */
+
+var penaltyAmount = -1;
 $(function () {
     var orderId = $('#inputOrderId').val();
     if (orderId == null || orderId == "") {
@@ -24,7 +26,7 @@ $(function () {
         if (parseFloat($('#inputPayAmount').val()) == 0) {
             alert("此订单不需要支付");
         } else {
-            var cashDeskRequestUrl = "/api/order/getCashDesk";
+            var cashDeskRequestUrl = "/api/order/getCashDesk?user=" + $('#inputUser').val();
             var cashDeskRequest = {
                 "orderId": $('#inputOrderId').val(),
                 "amount": $('#inputPayAmount').val()
@@ -60,14 +62,30 @@ $(function () {
 function cancelOrder() {
     var url = "/api/order/cancelOrder";
     var req = {
-        "orderId": parseInt($('#inputOrderId').val())
+        "orderId": parseInt($('#inputOrderId').val()),
+        "penaltyAmount": penaltyAmount
     };
     var result = ajaxCommonForJson(url, "POST", req);
     if (result != null && result.success) {
         alert("取消成功");
+    } else if (result.penaltyAmount != null) {
+        if (confirm("取消订单将收取" + result.penaltyAmount + "元作为罚金，确认取消吗？")) {
+            var confirmUrl = "/api/order/cancelOrder";
+            var confirmReq = {
+                "orderId": parseInt($(this).attr("orderId")),
+                "penaltyAmount": result.penaltyAmount
+            };
+            var confirmResult = ajaxCommonForJson(url, "POST", req);
+            if (confirmResult != null && confirmResult.success) {
+                alert("取消成功");
+            } else {
+                alert(result.reason);
+            }
+        }
     } else {
         alert(result.reason);
     }
+
     window.location.reload(true);
 }
 

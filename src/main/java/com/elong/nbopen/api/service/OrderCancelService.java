@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Service
@@ -36,22 +37,31 @@ public class OrderCancelService {
         CancelOrderCondition condition = new CancelOrderCondition();
         condition.setOrderId(request.getOrderId());
         condition.setCancelCode("行程变更");
+        condition.setPenaltyAmount(request.getPenaltyAmount());
 
         try {
             OrderCancelResult cancelResult = cancelApi.Invoke(condition);
             if (cancelResult == null || !cancelResult.getCode().equals("0") || !cancelResult.getResult().isSuccesss()) {
-                result.setReason(cancelResult.getCode().split("\\|")[1]);
+                String reason = cancelResult.getCode().split("\\|")[1];
+                result.setPenaltyAmount(new BigDecimal(Double.parseDouble(reason.split(":")[1])));
+            } else if (cancelResult != null && cancelResult.getCode().equals("0")) {
+                if (cancelResult.getResult().isSuccesss()) {
+                    result.setSuccess(true);
+                    // 取消成功则更新接收到取消请求的时间，并且将订单状态变更为D，
+                    // 如果以后有订单变化表明没有取消成功，那么再根据增量中的信息更新订单
+                    // 取消成功后也不再可以支付
+                    OrderDo orderDo = new OrderDo();
+                    orderDo.setOrderId(request.getOrderId());
+                    orderDo.setStatus("D");
+                    orderDo.setNeedPay(false);
+                    orderDo.setCancelRecieveTime(new Date());
+                    orderDao.updateOrder(orderDo);
+                } else {
+                    result.setPenaltyAmount(cancelResult.getResult().getPenaltyAmount());
+                }
+
             } else {
-                result.setSuccess(true);
-                // 取消成功则更新接收到取消请求的时间，并且将订单状态变更为D，
-                // 如果以后有订单变化表明没有取消成功，那么再根据增量中的信息更新订单
-                // 取消成功后也不再可以支付
-                OrderDo orderDo = new OrderDo();
-                orderDo.setOrderId(request.getOrderId());
-                orderDo.setStatus("D");
-                orderDo.setNeedPay(false);
-                orderDo.setCancelRecieveTime(new Date());
-                orderDao.updateOrder(orderDo);
+                result.setReason("未知原因导致取消失败");
             }
         } catch (Exception e) {
             result.setReason("取消操作异常");
