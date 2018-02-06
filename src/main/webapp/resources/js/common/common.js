@@ -347,7 +347,11 @@ function getGuaranteeDescription(guaranteeRules, nightlyRates, lastArrivalTime, 
 		} else if (lastCancelTime == 0) {
             description += "一经预订不可取消。";
 		} else {
-            description += "在"+ moment(cancelTime).format("YYYY年MM月DD日HH时mm分") + "前免费取消，之后取消将扣除所有担保金额。";
+        	if (moment(cancelTime).valueOf() <= moment().valueOf()) {
+                description += "一经预订不可取消。";
+			} else {
+                description += "在"+ moment(cancelTime).format("YYYY年MM月DD日HH时mm分") + "前免费取消，之后取消将扣除所有担保金额。";
+			}
 		}
 
 		var result = {
@@ -506,19 +510,42 @@ function getPrepayDescription(prepayRules, nightlyRates, lastArrivalTime, roomNu
         }
 
         if (amount1 == 0 && amount2 == 0) {
-            description += "在" + moment(daytime2).format("YYYY年MM月DD日HH时") + "前可以免费取消，";
+        	if (moment(daytime2).valueOf() < moment().valueOf()) {
+                description += "一经预订不可取消。";
+			} else {
+                description += "在" + moment(daytime2).format("YYYY年MM月DD日HH时") + "前可以免费取消，之后不可取消";
+			}
+
 		} else if (amount1 == 0 && amount2 != 0) {
-            description += "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + "前可以免费取消，";
-            description += "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + moment(daytime2).format("YYYY年MM月DD日HH时") + "之间取消将扣除" + (amountType2 == 0? amount2*roomNum +"元": "房费的"+amount2+"%") + "作为罚金，";
-            description += "之后不可取消。";
+        	if (moment(daytime1).valueOf() > moment().valueOf()) {
+                description += "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + "前可以免费取消，";
+			}
+			if (moment(daytime2).valueOf() < moment().valueOf()) {
+                description += "一经预订不可取消。";
+			} else {
+                description += "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + moment(daytime2).format("YYYY年MM月DD日HH时") + "之间取消将扣除" + (amountType2 == 0? amount2*roomNum +"元": "房费的"+amount2+"%") + "作为罚金，";
+                description += "之后不可取消。";
+			}
         } else if (amount1 != 0 && amount2 == 0) {
-            description += "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + "前取消将扣除" + (amountType1 == 0? amount1*roomNum +"元": "房费的"+amount1 + "%") + "作为罚金，";
-            description += "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + moment(daytime2).format("YYYY年MM月DD日HH时") + "之间可以免费取消，";
-            description += "之后不可取消。";
+            if (moment(daytime1).valueOf() > moment().valueOf()) {
+                description += "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + "前取消将扣除" + (amountType1 == 0? amount1*roomNum +"元": "房费的"+amount1 + "%") + "作为罚金，";
+            }
+            if (moment(daytime2).valueOf() < moment().valueOf()) {
+                description += "一经预订不可取消。";
+            } else {
+                description += "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + moment(daytime2).format("YYYY年MM月DD日HH时") + "之间可以免费取消，";
+                description += "之后不可取消。";
+            }
 		} else if(amount1 != 0 && amount2 != 0) {
-            description = "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + "前取消将扣除" + (amountType1 == 0? amount1*roomNum +"元": "房费的"+amount1 + "%") + "作为罚金，";
-            description += "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + moment(daytime2).format("YYYY年MM月DD日HH时") + "之间取消将扣除"+ (amountType2 == 0? amount2*roomNum +"元": "房费的"+amount2+"%") + "作为罚金，";
-            description += "之后不可取消。";
+            if (moment(daytime1).valueOf() > moment().valueOf()) {
+                description = "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + "前取消将扣除" + (amountType1 == 0? amount1*roomNum +"元": "房费的"+amount1 + "%") + "作为罚金，";
+            }
+            if (moment(daytime2).valueOf() < moment().valueOf()) {
+                description += "一经预订不可取消。";
+            } else {
+                description += "在" + moment(daytime1).format("YYYY年MM月DD日HH时") + moment(daytime2).format("YYYY年MM月DD日HH时") + "之间取消将扣除"+ (amountType2 == 0? amount2*roomNum +"元": "房费的"+amount2+"%") + "作为罚金，";
+                description += "之后不可取消。";
+            }
 		}
 
 		var result = {

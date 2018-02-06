@@ -72,15 +72,7 @@ $(function() {
         getDetail();
     });
 
-    $('div[name="divRoomDetail"]').click(function() {
-        var arrow = $(this).find("span").eq(4).find("i");
-        if (arrow.attr('class') == 'glyphicon glyphicon-chevron-right') {
-            arrow.attr('class', 'glyphicon glyphicon-chevron-down');
-        } else {
-            arrow.attr('class', 'glyphicon glyphicon-chevron-right');
-        }
 
-    });
 });
 
 function getDetail() {
@@ -235,6 +227,17 @@ function getDetail() {
 
         });
     }
+
+    $('div[name="divRoomDetail"]').click(function() {
+        var arrow = $(this).find("span").eq(4).find("i");
+        if (arrow.attr('class') == 'glyphicon glyphicon-chevron-right') {
+            arrow.attr('class', 'glyphicon glyphicon-chevron-down');
+        } else {
+            arrow.attr('class', 'glyphicon glyphicon-chevron-right');
+        }
+
+    });
+
     $('#aMoreHotelInfo').click(function(){
         if ($(this).find('i').attr('class') == "glyphicon glyphicon-chevron-down") {
             $(this).find('i').attr('class', 'glyphicon glyphicon-chevron-right');
