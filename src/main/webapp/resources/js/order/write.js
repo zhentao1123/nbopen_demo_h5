@@ -133,7 +133,7 @@ function createOrder() {
         "roomTypeID": $("#inputRoomTypeId").val(),
         "ratePlanId": $("#inputRatePlanId").val(),
 
-        "earliestArrivalTime": (nextHour.substring(0,1) == "0"? arrivalDate + " " + "23:59": arrivalDate + " " + nextHour + ":00"),
+        "earliestArrivalTime": (nextHour.substring(0,1) == "0" && parseInt(nextHour.substring(1,1)) < 7? arrivalDate + " " + "23:59": arrivalDate + " " + nextHour + ":00"),
         "latestArrivalTime": ($('#btnArrivalTime').attr("value").substring(0,1) == "0"? arrivalNextDate: arrivalDate) + " " + $('#btnArrivalTime').attr("value"),
         "numberOfRooms": $("#btnRoomNum").attr("value"),
         "totalPrice": parseFloat($('#inputTotalRate').val())
@@ -193,7 +193,7 @@ function createOrder() {
         "hotelId": $("#inputHotelId").val(),
         "roomTypeId": $("#inputRoomTypeId").val(),
         "ratePlanId": $("#inputRatePlanId").val(),
-        "earliestArrivalTime":  (nextHour.substring(0,1) == "0"? arrivalDate + " " + "23:59": arrivalDate + " " + nextHour + ":00"),
+        "earliestArrivalTime":  (nextHour.substring(0,1) == "0" && parseInt(nextHour.substring(1,1)) < 7? arrivalDate + " " + "23:59": arrivalDate + " " + nextHour + ":00"),
         "latestArrivalTime": ($('#btnArrivalTime').attr("value").substring(0,1) == "0"? arrivalNextDate: arrivalDate) + " " + $('#btnArrivalTime').attr("value"),
         "paymentType": $('#inputPaymentType').val(),
         "numberOfRooms": $("#btnRoomNum").attr("value"),
