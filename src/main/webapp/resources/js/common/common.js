@@ -235,11 +235,11 @@ function getCookie(c_name){
 /**
  * 获取最终使用的担保
  *
- * @param guaranteeRules
- * @param lastArrivalTime
- * @param roomNum
- * @param arrivalDate
- * @param departureDate
+ * @param guaranteeRules	担保规则列表
+ * @param lastArrivalTime	最晚到店时间
+ * @param roomNum			预订房间数量
+ * @param arrivalDate		到店日期
+ * @param departureDate		离店日期
  */
 function getGuaranteeDescription(guaranteeRules, nightlyRates, lastArrivalTime, roomNum, arrivalDate, departureDate) {
 	// 担保金额
@@ -364,13 +364,13 @@ function getGuaranteeDescription(guaranteeRules, nightlyRates, lastArrivalTime, 
 }
 
 /**
- * 获取最终使用的预付规则
- * @param prepayRules
- * @param nightlyRates
- * @param lastArrivalTime
- * @param roomNum
- * @param arrivalDate
- * @param departureDate
+ * 最终使用的预付规则
+ * @param prepayRules		预付规则列表
+ * @param nightlyRates		每夜价格列表
+ * @param lastArrivalTime	最晚到店时间
+ * @param roomNum			预订房间数量
+ * @param arrivalDate		到店日期
+ * @param departureDate		离店日期
  */
 function getPrepayDescription(prepayRules, nightlyRates, lastArrivalTime, roomNum, arrivalDate, departureDate) {
 
@@ -405,10 +405,6 @@ function getPrepayDescription(prepayRules, nightlyRates, lastArrivalTime, roomNu
         for (var j = 0; j < prepayRules.length; j++) {
             var prepayRule = prepayRules[j];
             if (thisDay >= prepayRule.startDate && thisDay <= prepayRule.endDate) {
-                // 入住日类型是第一天并且当前不是第一天则可以直接跳过
-                if ( prepayRule.dateType == "CheckInDay" && i != 0) {
-                    break;
-                }
                 // 星期不符合直接跳过
                 var week = moment(thisDay).day();
                 if (prepayRule.weekSet.indexOf(week) < 0) {
